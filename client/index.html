@@ -9,12 +9,27 @@
   </head>
   <body>
     <div id="app">
-      <div id="chat_container"></div>
+      <div id="container">
+        <div id="question" name="question">
+          <h1>Simple Sum</h1>
+          <p >
+          Read two integer values, in this case, the variables A and B. After this, calculate the sum between them and assign it to the variable SOMA. Write the value of this variable.
+          <br>
+          <h2>Input</h2>
+          The input file contains 2 integer numbers.
+          <br>
+          <h2>Output</h2>
+          Print the message "SOMA" with all the capital letters, with a blank space before and after the equal signal followed by the corresponding value to the sum of A and B. Like all the problems, don't forget to print the end of line, otherwise you will receive "Presentation Error"
 
-      <form>
-        <textarea name="prompt" rows="1" cols="1" placeholder="Ask NewGPT..."></textarea>
-        <button type="submit"><img src="assets/send.svg"/></button>
-      </form>
+        </p>
+        </div>
+        <div id="chat_container">
+          <form>
+          <textarea name="prompt" placeholder="Ask NewGPT..."></textarea>
+          <button type="submit"><img src="assets/send.svg"/></button>
+        </form>
+      </div>
+    </div>
     </div>
     <script type="module" src="/script.js"></script>
   </body>

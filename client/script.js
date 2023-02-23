@@ -1,8 +1,10 @@
+
 import bot from '/assets/bot.svg';
 import user from '/assets/user.svg';
 
 const form = document.querySelector('form');
 const chatContainer = document.querySelector('#chat_container');
+const question = document.querySelector('#question');
 
 let loadInterval;
 
@@ -42,12 +44,12 @@ function generateUniqueId() {
 function chatStripe (isAi, value, uniqueId) {
   return (
     `
-      <div class ="wrappper ${isAi && 'ai'}">
+      <div class ="wrappperai">
         <div class="chat">
           <div class="profile">
           <img
-            src="${isAi ? bot : user}"
-            alt="${isAi ? 'bot' : 'user'}"
+            src="${bot}"
+            alt="${'bot'}"
             />
           </div>
           <div class="message" id=${uniqueId}>${value}</div>
@@ -61,9 +63,10 @@ const handleSubmit = async(e) => {
   e.preventDefault();
 
   const data = new FormData(form);
+  const questionData = question.textContent;
 
   //user's chatstripe
-  chatContainer.innerHTML += chatStripe(false, data.get('prompt'));
+  
 
   form.reset();
 
@@ -108,8 +111,3 @@ const handleSubmit = async(e) => {
  
 
 form.addEventListener('submit', handleSubmit);
-form.addEventListener('keyup', (e) => {
-  if (e.keyCode === 13){
-    handleSubmit(e);
-  }
-})
