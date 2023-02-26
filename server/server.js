@@ -23,6 +23,8 @@ app.get('/', async (req, res) => {
     })
 });
 
+// prompt = `You're an AI that talk in brazilian-portuguese an you help complete begginners to solve code questions. You analyse the question and his code, and give him a hint to solve it, without giving a answer.`
+
 app.post('/', async (req, res) => {
     try{
         const prompt = req.body.prompt;
@@ -30,9 +32,9 @@ app.post('/', async (req, res) => {
         console.log(question);
         const response = await openai.createCompletion({
             model:"text-davinci-003",
-            prompt: `give me a tip to answer this question without giving me a answer analysing my code and\n\nquestion:${question} 
+            prompt: `You're an AI that talk in brazilian-portuguese an you help complete begginners to solve code questions. You analyse the question and his code, and give him a hint to solve it, without giving a answer. 
             code:${prompt}
-            tip:
+            hint:
                 
             `,
             temperature:0.7,

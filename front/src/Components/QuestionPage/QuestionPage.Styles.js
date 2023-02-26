@@ -6,6 +6,7 @@ export const QuestionContent = styled.div`
   flex-wrap: wrap;
   width: 100%;
   background-color: rgba(137, 220, 240, 0.15);
+  overflowY: auto;
 `
 
 export const InstructionContainer = styled.div`
@@ -29,6 +30,19 @@ export const CodeEditorContainer = styled.div`
 export const Editor = styled.div`
   width: 100%:
   height: 100%;
+`
+
+export const CodeArea = styled.textarea`
+  display: block;
+  font-size: 1rem;
+  padding: .5em;
+  background-color: #0f0f0f;
+  color: white;
+  width: 100%;
+
+  &:focus{
+    outline: none;
+  }
 `
 
 export const EditorForm = styled.form`
@@ -95,6 +109,7 @@ export const CodeAction = styled.button`
 `
 
 export const SubmitButton = styled.a`
+  display: inline-block;
   padding: .35rem 1.2rem;
   font-size: 1rem;
   color: white;
@@ -103,5 +118,10 @@ export const SubmitButton = styled.a`
 
   &:hover {
     cursor: pointer;
+  }
+
+  &:active {
+    filter: brightness(0.8);
+    transform: translateY(2px);
   }
 `
