@@ -4,7 +4,8 @@ window.onload = () => {
     mode: 'javascript',
     theme: 'ayu-dark',
     lineNumbers: true,
-    autoCloseBrackets: true
+    autoCloseBrackets: true,
+    electricChars: true
   })
 
   // HANDLE COPY
