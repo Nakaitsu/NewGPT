@@ -76,7 +76,7 @@ const QuestionPage = ({ question }) => {
       // }else if (buttonId === 'hint'){
       //   setLoadingResponse(true)
       //   const sourceCode = texareaRef.current.value
-      }else if (buttonId === 'submit' || buttonId == 'hint')  {
+      }else if (buttonId === 'submit' || buttonId === 'hint' || buttonId === "output")  {
         setLoadingResponse(true)
         // const sourceCode = editor.getValue()
         const sourceCode = textareaRef.current.value
@@ -147,9 +147,10 @@ const QuestionPage = ({ question }) => {
 
               <div className="opcoes-list" onClick={handleActionClick}>
                 <CodeAction id="expand">Expand</CodeAction>
+                <CodeAction id="copy">Copie</CodeAction>
                 <CodeAction id="hint">Hint</CodeAction>
-                <CodeAction id="copy">Copy</CodeAction>
                 <CodeAction id="reset">Reset</CodeAction>
+                <CodeAction id="output">Output</CodeAction>
 
                 <SubmitButton id="submit">Enviar</SubmitButton>
               </div>
