@@ -27,22 +27,41 @@ app.get('/', async (req, res) => {
 
 app.post('/', async (req, res) => {
     try{
-        const prompt = req.body.prompt;
-        const question = req.body.question;
-        console.log(question);
-        const response = await openai.createCompletion({
+        const {question, code, language }= req.body;
+        console.log(question, code,language);
+        let response = null;
+    if(req.body.type === "hint"){        
+            response = await openai.createCompletion({
+                model:"text-davinci-003",
+                prompt: `You're an AI that talk in brazilian-portuguese an you help complete begginners to solve code questions. You analyse the question and his code, and give him a hint to solve it, without giving a answer. 
+                question:${question}
+                language:${language}
+                code:${code}
+                hint:                  
+                `,
+                temperature:0.7,
+                max_tokens:100,
+                top_p:1,
+                frequency_penalty:0.5,
+                presence_penalty:0,       
+            });
+        }else if(req.body.type === "submit"){
+        response = await openai.createCompletion({
             model:"text-davinci-003",
-            prompt: `You're an AI that talk in brazilian-portuguese an you help complete begginners to solve code questions. You analyse the question and his code, and give him a hint to solve it, without giving a answer. 
-            code:${prompt}
-            hint:
-                
-            `,
+            prompt: 
+            `You tell if the answer is correct or not 
+            question:${question}
+            language:${language}
+            code:${code}
+            answer:
+             `,
             temperature:0.7,
             max_tokens:100,
             top_p:1,
             frequency_penalty:0.5,
             presence_penalty:0,       
         });
+    }
         res.status(200).send({
             bot: response.data.choices[0].text
         })

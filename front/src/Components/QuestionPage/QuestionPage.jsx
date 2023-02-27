@@ -12,7 +12,7 @@ import { CodeEditorContainer, InfoInstructionBox, EditorForm, InfoSectionTitle, 
 // import 'codemirror/addon/edit/closebrackets'
 // import 'codemirror/theme/ayu-dark.css'
 
-const QuestionPage = () => {
+const QuestionPage = ({ question }) => {
   // const [editor, setEditor] = useState(null)
   const [language, setLanguage] = useState('')
   const textareaRef = useRef(null)
@@ -73,18 +73,19 @@ const QuestionPage = () => {
       if (buttonId === 'copy') {
         // const sourceCode = editor.getValue()
         // await navigator.clipboard.writeText(sourceCode)
-      }
-      else if (buttonId === 'submit') {
+      // }else if (buttonId === 'hint'){
+      //   setLoadingResponse(true)
+      //   const sourceCode = texareaRef.current.value
+      }else if (buttonId === 'submit' || buttonId == 'hint')  {
         setLoadingResponse(true)
         // const sourceCode = editor.getValue()
         const sourceCode = textareaRef.current.value
-
         fetch('http://localhost:5000', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json'
           },
-          body: JSON.stringify({ code: sourceCode, language })
+          body: JSON.stringify({ code: sourceCode, language, question, type: buttonId })
         })
           .then(data => data.json())
           .then(result => {
@@ -111,14 +112,14 @@ const QuestionPage = () => {
           <h2>Instruções</h2>
 
           <InfoSectionTitle>Resumo</InfoSectionTitle>
-          <InfoText>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Ipsam, in esse! Repellendus, perferendis nihil veritatis ad debitis quo sequi rem
-            voluptatibus quisquam quam exercitationem enim nemo iste eos accusantium obcaecati?
+          { question }
+          {/* <InfoText>
+          Task
+          Given an integer, , print its first  multiples. Each multiple  (where ) should be printed on a new line in the form: N x i = result.
           </InfoText>
           <InfoText>
-            Debitis quo sequi rem
-            voluptatibus quisquam quam exercitationem enim nemo iste eos
+          Print  lines of output; each line  (where ) contains the  of  in the form:
+          N x i = result.
           </InfoText>
 
           <InfoSectionTitle>Input</InfoSectionTitle>
@@ -132,7 +133,7 @@ const QuestionPage = () => {
           <InfoSectionTitle>Output</InfoSectionTitle>
           <InfoInstructionBox>
             41
-          </InfoInstructionBox>
+          </InfoInstructionBox> */}
         </InstructionContainer>
 
         <CodeEditorContainer>
