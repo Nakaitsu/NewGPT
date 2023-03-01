@@ -5,6 +5,8 @@
   --blue-darken: #142a3a;
   --green: #629a34;
   --red: #f91a47;
+  --dm-blue: #b6f1fc;
+  --dm-dark: #142428;
   
   --orange: #f5a623;
   --purple: #8b5abb;
@@ -29,6 +31,8 @@ html {
 body {
   font-family: sans-serif;
   height: 100%;
+  background-color: var(--dm-dark);
+  color: white;
 }
 
 html,

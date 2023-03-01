@@ -28,8 +28,13 @@ export const CodeEditorContainer = styled.div`
 `
 
 export const Editor = styled.div`
-  width: 100%:
+  width: 100%;
   height: 100%;
+
+  .CodeMirror {
+    height: 100% !important;
+    width: 100% !important;
+  }
 `
 
 export const CodeArea = styled.textarea`
@@ -46,7 +51,8 @@ export const CodeArea = styled.textarea`
 `
 
 export const EditorForm = styled.form`
-
+  width: 100%;
+  height: 100%;
 `
 
 export const EditorOptionsContainer = styled.div`

@@ -4,16 +4,14 @@ import { Container, ContentBlock } from './../../Assets/Components/index';
 import Header from './../Header/Header';
 import { CodeEditorContainer, InfoInstructionBox, EditorForm, InfoSectionTitle, InfoText, InstructionContainer, QuestionContent, EditorOptionsContainer, EditorLanguageSelector, SubmitButton, CodeAction, Editor, CodeArea } from './QuestionPage.Styles';
 
-// import CodeMirror from '../../Assets/dist/codemirror-5.65.12/lib/codemirror';
-
-// import CodeMirror from 'codemirror'
-// import 'codemirror/mode/javascript/javascript'
-// import 'codemirror/lib/codemirror.css'
-// import 'codemirror/addon/edit/closebrackets'
-// import 'codemirror/theme/ayu-dark.css'
+import CodeMirror from 'codemirror'
+import 'codemirror/mode/javascript/javascript'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/addon/edit/closebrackets'
+import 'codemirror/theme/ayu-dark.css'
 
 const QuestionPage = ({ question }) => {
-  // const [editor, setEditor] = useState(null)
+  const [editor, setEditor] = useState(null)
   const [language, setLanguage] = useState('')
   const textareaRef = useRef(null)
   const [consoleOpen, setConsoleOpen] = useState(false)
@@ -21,6 +19,18 @@ const QuestionPage = ({ question }) => {
   const [loadingResponse, setLoadingResponse] = useState(false)
   const [loadInterval, setLoadInterval] = useState(null)
   const [dotCount, setDotCount] = useState(0);
+
+  const initializeEditor = () => {
+    const codeEditor = CodeMirror.fromTextArea(textareaRef.current, {
+      mode: 'javascript',
+      theme: 'ayu-dark',
+      lineNumbers: true,
+      autoCloseBrackets: true,
+      electricChars: true
+    })
+
+    setEditor(codeEditor)
+  }
 
   useEffect(() => {
     if (loadingResponse) {
@@ -37,21 +47,21 @@ const QuestionPage = ({ question }) => {
       setLoadInterval(null);
     }
 
-    //   if(!!editor) {
-    //     const initializeEditor = () => {
-    //       const codeEditor = CodeMirror.fromTextArea(textareaRef.current, {
-    //         mode: 'javascript',
-    //         theme: 'ayu-dark',
-    //         lineNumbers: true,
-    //         autoCloseBrackets: true,
-    //         electricChars: true
-    //       })
+    // if (!editor) {
+    //   // const initializeEditor = () => {
+    //   //   const codeEditor = CodeMirror.fromTextArea(textareaRef.current, {
+    //   //     mode: 'javascript',
+    //   //     theme: 'ayu-dark',
+    //   //     lineNumbers: true,
+    //   //     autoCloseBrackets: true,
+    //   //     electricChars: true
+    //   //   })
 
-    //       setEditor(codeEditor)
-    //     }
+    //   //   setEditor(codeEditor)
+    //   // }
 
-    //     initializeEditor()
-    //   }
+    //   initializeEditor()
+    // }
   }, [loadingResponse])
 
   useEffect(() => {
@@ -70,13 +80,16 @@ const QuestionPage = ({ question }) => {
     const buttonId = event.target.id
 
     if (buttonId) {
-      if (buttonId === 'copy') {
+      if(buttonId === 'expand') {
+        initializeEditor()
+      }
+      else if (buttonId === 'copy') {
         // const sourceCode = editor.getValue()
         // await navigator.clipboard.writeText(sourceCode)
-      // }else if (buttonId === 'hint'){
-      //   setLoadingResponse(true)
-      //   const sourceCode = texareaRef.current.value
-      }else if (buttonId === 'submit' || buttonId === 'hint' || buttonId === "output")  {
+        // }else if (buttonId === 'hint'){
+        //   setLoadingResponse(true)
+        //   const sourceCode = texareaRef.current.value
+      } else if (buttonId === 'submit' || buttonId === 'hint' || buttonId === "output") {
         setLoadingResponse(true)
         // const sourceCode = editor.getValue()
         const sourceCode = textareaRef.current.value
@@ -112,28 +125,7 @@ const QuestionPage = ({ question }) => {
           <h2>Instruções</h2>
 
           <InfoSectionTitle>Resumo</InfoSectionTitle>
-          { question }
-          {/* <InfoText>
-          Task
-          Given an integer, , print its first  multiples. Each multiple  (where ) should be printed on a new line in the form: N x i = result.
-          </InfoText>
-          <InfoText>
-          Print  lines of output; each line  (where ) contains the  of  in the form:
-          N x i = result.
-          </InfoText>
-
-          <InfoSectionTitle>Input</InfoSectionTitle>
-          <InfoInstructionBox>
-            2  <br />
-            10 <br />
-            3  <br />
-            26
-          </InfoInstructionBox>
-
-          <InfoSectionTitle>Output</InfoSectionTitle>
-          <InfoInstructionBox>
-            41
-          </InfoInstructionBox> */}
+          {question}
         </InstructionContainer>
 
         <CodeEditorContainer>
@@ -157,7 +149,9 @@ const QuestionPage = ({ question }) => {
             </EditorOptionsContainer>
 
             <Editor>
-              <CodeArea ref={textareaRef} name="code" id="code" cols="60" rows="24" spellCheck={false} autoComplete={false}></CodeArea>
+              <CodeArea ref={textareaRef} name="code" id="code" cols="60" rows="24" spellCheck={false} autoComplete={false}>
+                Usar flex blox para dividir o console e editor
+              </CodeArea>
             </Editor>
 
             {consoleOpen && (<div className="resultado" id="resultado">
