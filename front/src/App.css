@@ -85,25 +85,3 @@ textarea {
 .editor {
   width: 100%;
 }
-
-/* .opcao {
-  font-size: 1rem;
-  margin-left: .5em;
-  margin-right: .5em;
-  color: white;
-  border: none;
-  background-color: transparent;
-} */
-
-/* .enviar {
-  padding: .35rem 1.2rem;
-  color: white;
-  background-color: #4A360C;
-  border-radius: 8px;
-} */
-
-.resultado {
-  background-color: #4A360C;
-  color: white;
-  padding: .3rem;
-}

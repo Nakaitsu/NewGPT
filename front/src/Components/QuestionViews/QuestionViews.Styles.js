@@ -14,7 +14,7 @@ export const Views = styled.div`
 export const ViewLink = styled.a `
   font-size: 1.2rem;
   font-weight: 700;
-  color: #0f0f0f;
+  color: white;
   display: inline-block;
   padding: .45em 1.075em;
   text-decoration: none;

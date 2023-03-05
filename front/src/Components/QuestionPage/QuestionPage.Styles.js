@@ -22,18 +22,22 @@ export const InstructionContainer = styled.div`
 `
   
 export const CodeEditorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
   flex: 1;
   flex-basis: 380px;
-  height: 100%;
+  max-width: 60%;
 `
 
 export const Editor = styled.div`
   width: 100%;
-  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 
   .CodeMirror {
-    height: 100% !important;
-    width: 100% !important;
+    height: 450px !important;
   }
 `
 
@@ -52,7 +56,11 @@ export const CodeArea = styled.textarea`
 
 export const EditorForm = styled.form`
   width: 100%;
-  height: 100%;
+  max-height: 100%;
+  min-height: calc(570.75px - 50px);
+
+  display: flex;
+  flex-direction: column;
 `
 
 export const EditorOptionsContainer = styled.div`
@@ -129,5 +137,18 @@ export const SubmitButton = styled.a`
   &:active {
     filter: brightness(0.8);
     transform: translateY(2px);
+  }
+`
+
+export const Console = styled.div`
+  padding: .3rem;
+  max-height: 70px;
+  overflowY: auto;
+  background-color: #0f0f0f;
+  color: white;
+
+  span {
+    color: var(--orange);
+    font-weight: bold;
   }
 `

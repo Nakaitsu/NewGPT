@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import QuestionViews from './../QuestionViews/QuestionViews';
 import { Container, ContentBlock } from './../../Assets/Components/index';
 import Header from './../Header/Header';
-import { CodeEditorContainer, InfoInstructionBox, EditorForm, InfoSectionTitle, InfoText, InstructionContainer, QuestionContent, EditorOptionsContainer, EditorLanguageSelector, SubmitButton, CodeAction, Editor, CodeArea } from './QuestionPage.Styles';
+import { CodeEditorContainer, InfoInstructionBox, EditorForm, InfoSectionTitle, InfoText, InstructionContainer, QuestionContent, EditorOptionsContainer, EditorLanguageSelector, SubmitButton, CodeAction, Editor, CodeArea, Console } from './QuestionPage.Styles';
 
 import CodeMirror from 'codemirror'
 import 'codemirror/mode/javascript/javascript'
@@ -11,7 +11,7 @@ import 'codemirror/addon/edit/closebrackets'
 import 'codemirror/theme/ayu-dark.css'
 
 const QuestionPage = ({ question }) => {
-  const [editor, setEditor] = useState(null)
+  const [hasEditor, setHasEditor] = useState(false)
   const [language, setLanguage] = useState('')
   const textareaRef = useRef(null)
   const [consoleOpen, setConsoleOpen] = useState(false)
@@ -20,17 +20,7 @@ const QuestionPage = ({ question }) => {
   const [loadInterval, setLoadInterval] = useState(null)
   const [dotCount, setDotCount] = useState(0);
 
-  const initializeEditor = () => {
-    const codeEditor = CodeMirror.fromTextArea(textareaRef.current, {
-      mode: 'javascript',
-      theme: 'ayu-dark',
-      lineNumbers: true,
-      autoCloseBrackets: true,
-      electricChars: true
-    })
-
-    setEditor(codeEditor)
-  }
+  let codeMirrorEditor = null
 
   useEffect(() => {
     if (loadingResponse) {
@@ -47,21 +37,24 @@ const QuestionPage = ({ question }) => {
       setLoadInterval(null);
     }
 
-    // if (!editor) {
-    //   // const initializeEditor = () => {
-    //   //   const codeEditor = CodeMirror.fromTextArea(textareaRef.current, {
-    //   //     mode: 'javascript',
-    //   //     theme: 'ayu-dark',
-    //   //     lineNumbers: true,
-    //   //     autoCloseBrackets: true,
-    //   //     electricChars: true
-    //   //   })
+    if (!codeMirrorEditor && !hasEditor) {
+      const initializeEditor = () => {
+        const codeEditor = CodeMirror.fromTextArea(textareaRef.current, {
+          value: '// digite seu código aqui',
+          mode: 'javascript',
+          theme: 'ayu-dark',
+          lineNumbers: true,
+          autoCloseBrackets: true,
+          electricChars: true,
+          scrollbarStyle: 'native'
+        })
 
-    //   //   setEditor(codeEditor)
-    //   // }
+        codeMirrorEditor = codeEditor
+        setHasEditor(true)
+      }
 
-    //   initializeEditor()
-    // }
+      initializeEditor()
+    }
   }, [loadingResponse])
 
   useEffect(() => {
@@ -80,7 +73,7 @@ const QuestionPage = ({ question }) => {
     const buttonId = event.target.id
 
     if (buttonId) {
-      if(buttonId === 'expand') {
+      if (buttonId === 'expand') {
         initializeEditor()
       }
       else if (buttonId === 'copy') {
@@ -139,7 +132,7 @@ const QuestionPage = ({ question }) => {
 
               <div className="opcoes-list" onClick={handleActionClick}>
                 <CodeAction id="expand">Expand</CodeAction>
-                <CodeAction id="copy">Copie</CodeAction>
+                <CodeAction id="copy">Copy</CodeAction>
                 <CodeAction id="hint">Hint</CodeAction>
                 <CodeAction id="reset">Reset</CodeAction>
                 <CodeAction id="output">Output</CodeAction>
@@ -149,14 +142,15 @@ const QuestionPage = ({ question }) => {
             </EditorOptionsContainer>
 
             <Editor>
-              <CodeArea ref={textareaRef} name="code" id="code" cols="60" rows="24" spellCheck={false} autoComplete={false}>
-                Usar flex blox para dividir o console e editor
+              <CodeArea ref={textareaRef} name="code" id="code"
+                cols="60" rows="24" spellCheck={false} autoComplete={false}>
               </CodeArea>
+
+              {consoleOpen && (<Console id="resultado">
+                <span>Console: </span> {consoleText}
+              </Console>)}
             </Editor>
 
-            {consoleOpen && (<div className="resultado" id="resultado">
-              Console: {consoleText}
-            </div>)}
           </EditorForm>
         </CodeEditorContainer>
       </QuestionContent >
