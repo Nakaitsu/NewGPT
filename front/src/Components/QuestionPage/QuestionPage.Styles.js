@@ -73,11 +73,15 @@ export const EditorOptionsContainer = styled.div`
   background-color: var(--blue-darken);
 `
 
+export const OptionsList = styled.div`
+
+`
+
 export const InfoSectionTitle = styled.span`
   display: block;
   font-size: 1.115rem;
   font-weight: 700;
-  color: #0f0f0f;
+  color: var(--cyan);
   margin-top: .55em;
   margin-bottom: .55em;
 `
@@ -93,8 +97,14 @@ export const InfoInstructionBox = styled.div`
 
   padding: .75em;
   color: var(--blue-darken);
-  background-color: rgba(99, 228, 251, 0.4);
+  // background-color: rgba(99, 228, 251, 0.4);
+  background-color: var(--dm-blue);
   border-radius: 7px;
+
+  span {
+    display: block;
+    color: #0f0f0f;
+  }
 `
 
 export const EditorLanguageSelector = styled.select`

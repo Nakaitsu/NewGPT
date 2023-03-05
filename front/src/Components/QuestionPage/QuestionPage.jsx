@@ -2,13 +2,16 @@ import React, { useEffect, useRef, useState } from 'react'
 import QuestionViews from './../QuestionViews/QuestionViews';
 import { Container, ContentBlock } from './../../Assets/Components/index';
 import Header from './../Header/Header';
-import { CodeEditorContainer, InfoInstructionBox, EditorForm, InfoSectionTitle, InfoText, InstructionContainer, QuestionContent, EditorOptionsContainer, EditorLanguageSelector, SubmitButton, CodeAction, Editor, CodeArea, Console } from './QuestionPage.Styles';
+import { CodeEditorContainer, InfoInstructionBox, EditorForm, InfoSectionTitle, InfoText, InstructionContainer, QuestionContent, EditorOptionsContainer, EditorLanguageSelector, SubmitButton, CodeAction, Editor, CodeArea, Console, OptionsList } from './QuestionPage.Styles';
 
 import CodeMirror from 'codemirror'
-import 'codemirror/mode/javascript/javascript'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/addon/edit/closebrackets'
+
 import 'codemirror/theme/ayu-dark.css'
+
+import 'codemirror/mode/clike/clike'
+import 'codemirror/mode/python/python'
 
 const QuestionPage = ({ question }) => {
   const [hasEditor, setHasEditor] = useState(false)
@@ -20,6 +23,7 @@ const QuestionPage = ({ question }) => {
   const [loadInterval, setLoadInterval] = useState(null)
   const [dotCount, setDotCount] = useState(0);
 
+  const [editor, setEditor] = useState(null)
   let codeMirrorEditor = null
 
   useEffect(() => {
@@ -40,8 +44,6 @@ const QuestionPage = ({ question }) => {
     if (!codeMirrorEditor && !hasEditor) {
       const initializeEditor = () => {
         const codeEditor = CodeMirror.fromTextArea(textareaRef.current, {
-          value: '// digite seu código aqui',
-          mode: 'javascript',
           theme: 'ayu-dark',
           lineNumbers: true,
           autoCloseBrackets: true,
@@ -51,6 +53,7 @@ const QuestionPage = ({ question }) => {
 
         codeMirrorEditor = codeEditor
         setHasEditor(true)
+        setEditor(codeEditor)
       }
 
       initializeEditor()
@@ -64,8 +67,16 @@ const QuestionPage = ({ question }) => {
     }
   }, [dotCount]);
 
-  const handleLanguageSelect = (event) => {
-    setLanguage(event.target.value)
+  const handleLanguageSelect = async (event) => {
+    const language = event.target.value
+    setLanguage(language)
+
+    if(language == 'java')
+      editor.setOption('mode', 'text/x-java')
+    else if(language == 'c++') 
+      editor.setOption('mode', 'text/x-c++src')
+    else if(language == 'python') 
+      editor.setOption('mode', 'python')
   }
 
   const handleActionClick = async (event) => {
@@ -119,26 +130,43 @@ const QuestionPage = ({ question }) => {
 
           <InfoSectionTitle>Resumo</InfoSectionTitle>
           {question}
+
+          <InfoSectionTitle>Saída</InfoSectionTitle>
+          <InfoInstructionBox>
+            <span>2 x 1 = 2</span>
+            <span>2 x 2 = 4</span>
+            <span>2 x 3 = 6</span>
+            <span>2 x 4 = 8</span>
+            <span>2 x 5 = 10</span>
+            <span>2 x 6 = 12</span>
+            <span>2 x 7 = 14</span>
+            <span>2 x 8 = 16</span>
+            <span>2 x 9 = 18</span>
+            <span>2 x 10 = 20</span>
+          </InfoInstructionBox>
         </InstructionContainer>
 
         <CodeEditorContainer>
           <EditorForm>
             <EditorOptionsContainer>
-              <EditorLanguageSelector onChange={handleLanguageSelect} name="language" id="language">
-                <option value="java">Java</option>
-                <option value="c++">C++</option>
-                <option value="python">Python</option>
-              </EditorLanguageSelector>
+              <OptionsList>
+                <EditorLanguageSelector onChange={handleLanguageSelect} name="language" id="language">
+                  <option value="">Escolher Linguagem</option>
+                  <option value="java">Java</option>
+                  <option value="c++">C++</option>
+                  <option value="python">Python</option>
+                </EditorLanguageSelector>
+              </OptionsList>
 
-              <div className="opcoes-list" onClick={handleActionClick}>
-                <CodeAction id="expand">Expand</CodeAction>
-                <CodeAction id="copy">Copy</CodeAction>
-                <CodeAction id="hint">Hint</CodeAction>
-                <CodeAction id="reset">Reset</CodeAction>
-                <CodeAction id="output">Output</CodeAction>
+              <OptionsList className="opcoes-list" onClick={handleActionClick}>
+                <CodeAction id="expand">Expandir</CodeAction>
+                <CodeAction id="copy">Copiar</CodeAction>
+                <CodeAction id="hint">Dica</CodeAction>
+                <CodeAction id="reset">Resetar</CodeAction>
+                <CodeAction id="output">Saida</CodeAction>
 
                 <SubmitButton id="submit">Enviar</SubmitButton>
-              </div>
+              </OptionsList>
             </EditorOptionsContainer>
 
             <Editor>
