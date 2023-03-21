@@ -95,8 +95,8 @@ const QuestionPage = ({ question }) => {
         //   const sourceCode = texareaRef.current.value
       } else if (buttonId === 'submit' || buttonId === 'hint' || buttonId === "output") {
         setLoadingResponse(true)
-        // const sourceCode = editor.getValue()
-        const sourceCode = textareaRef.current.value
+        const sourceCode = editor.getValue()
+        // const sourceCode = textareaRef.current.value
         fetch('http://localhost:5000', {
           method: 'POST',
           headers: {

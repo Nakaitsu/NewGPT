@@ -33,7 +33,7 @@ app.post('/', async (req, res) => {
         if(req.body.type === "hint"){        
             response = await openai.createCompletion({
                 model:"text-davinci-003",
-                prompt: `You're an AI that talk in brazilian-portuguese an you help complete begginners to solve code questions. You analyse the question and his code, and give him a hint to solve it, without giving a answer. 
+                prompt: `You're an AI that talk in brazilian-portuguese and you help complete begginners to solve code questions. You analyze the question and his code, and give him hints, without giving a answer. 
                 question:${question}
                 language:${language}
                 code:${code}
@@ -64,7 +64,7 @@ app.post('/', async (req, res) => {
         response = await openai.createCompletion({
             model:"text-davinci-003",
             prompt: 
-            `You tell if the answer is correct or not, You talk in brazilian-portuguese.
+            `You talk in brazilian-portuguese. You tell if the answer is correct or not, without giving a answer.
             question:${question}
             language:${language}
             code:${code}
