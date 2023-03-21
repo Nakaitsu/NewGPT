@@ -70,7 +70,7 @@ app.post('/', async (req, res) => {
             code:${code}
             answer:
              `,
-            temperature:0.7,
+            temperture:0.7,
             max_tokens:100,
             top_p:1,
             frequency_penalty:0.5,
