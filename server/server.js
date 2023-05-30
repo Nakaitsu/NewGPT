@@ -13,8 +13,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const app = express();
-app.use(cors());
+const app = express();//app.use(cors());
 app.use(express.json());
 
 app.get('/', async (req, res) => {
@@ -33,7 +32,7 @@ app.post('/', async (req, res) => {
         if(req.body.type === "hint"){        
             response = await openai.createCompletion({
                 model:"text-davinci-003",
-                prompt: `You're an AI that talk in brazilian-portuguese and you help complete begginners to solve code questions. You analyze the question and his code, and give him hints, without giving a answer. 
+                prompt: `You're an AI that talk in brazilian-portuguese and you help complete begginners to solve code questions. You analyze the question and his code, and give him hints, without giving a answer.
                 question:${question}
                 language:${language}
                 code:${code}
