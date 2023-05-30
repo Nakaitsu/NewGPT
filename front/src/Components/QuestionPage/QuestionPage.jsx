@@ -133,16 +133,16 @@ const QuestionPage = ({ question }) => {
 
           <InfoSectionTitle>Saída</InfoSectionTitle>
           <InfoInstructionBox>
-            <span>2 x 1 = 2</span>
-            <span>2 x 2 = 4</span>
-            <span>2 x 3 = 6</span>
-            <span>2 x 4 = 8</span>
-            <span>2 x 5 = 10</span>
-            <span>2 x 6 = 12</span>
-            <span>2 x 7 = 14</span>
-            <span>2 x 8 = 16</span>
-            <span>2 x 9 = 18</span>
-            <span>2 x 10 = 20</span>
+            <span>Ashely(P)</span>
+            <span>Christeen(P)</span>
+            <span>Jane(A)</span>
+            <span>Jenny(D)</span>
+            <span>Julia(A)</span>
+            <span>Ketty(P)</span>
+            <span>Maria(A)</span>
+            <span>Meera(S)</span>
+            <span>Priya(S)</span>
+            <span>Samantha(D)</span>
           </InfoInstructionBox>
         </InstructionContainer>
 
@@ -155,6 +155,8 @@ const QuestionPage = ({ question }) => {
                   <option value="java">Java</option>
                   <option value="c++">C++</option>
                   <option value="python">Python</option>
+                  <option value="SQL">MySQL</option>
+
                 </EditorLanguageSelector>
               </OptionsList>
 
