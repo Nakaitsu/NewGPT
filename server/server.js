@@ -28,7 +28,7 @@ app.get('/', async (req, res) => {
 app.post('/', async (req, res) => {
     try{
         const {question, code, language }= req.body;
-        console.log(question, code,language);
+        // console.log(question, code, language);
         let response = null;
         if(req.body.type === "hint"){        
             response = await openai.createCompletion({
@@ -70,7 +70,7 @@ app.post('/', async (req, res) => {
             code:${code}
             answer:
              `,
-            temperture:0.7,
+            temperature:0.7,
             max_tokens:100,
             top_p:1,
             frequency_penalty:0.5,
