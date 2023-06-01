@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { Container } from "../../Assets/Components";
 
-export const Logo = styled.img`
-  
+export const Logo = styled.img `
+height: 80%;
+width: 60%;
 `
 
 export const HeaderContainer = styled.header`
