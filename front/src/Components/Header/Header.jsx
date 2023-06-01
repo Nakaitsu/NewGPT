@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container } from '../../Assets/Components'
+import AldeiaSenaiLogo from '../../Assets/images/AldeiaSenaiLogo.png'
 import { LoginContainer, LogoContainer, NavLink, Nav, HeaderContainer, Logo, SearchBarContainer, LoginButton, SearchInput } from './Header.Styles'
 
 const Header = () => {
@@ -7,8 +8,7 @@ const Header = () => {
     <HeaderContainer>
       <Container className="flex">
         <LogoContainer>
-          <Logo src="" alt="" />
-          AldeiaSenai
+          <Logo src={AldeiaSenaiLogo} alt="" /> 
         </LogoContainer>
 
         <Nav>
