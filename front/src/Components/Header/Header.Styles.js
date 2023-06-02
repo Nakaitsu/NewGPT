@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Container } from "../../Assets/Components";
+import { ReactComponent as LogoAldeia } from '../../Assets/images/AldeiaSenaiLogo.svg'
 
-export const Logo = styled.img `
+export const Logo = styled(LogoAldeia) `
 height: 80%;
 width: 60%;
 `
