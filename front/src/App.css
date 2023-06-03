@@ -15,6 +15,7 @@
   --gray: #999999;
   --dark-gray: #333333;
   --light-gray: #f5f5f5;
+  --lighter-gray: #EFEFEF;
   --brown: #6d4c41;
 }
 
@@ -32,7 +33,6 @@ body {
   font-family: sans-serif;
   height: 100%;
   background-color: var(--dm-dark);
-  color: white;
 }
 
 html,
@@ -64,6 +64,22 @@ textarea {
   margin-bottom: 2em;
 }
 
+.mb-sm{
+ margin-bottom: 1rem;
+}
+
+.mt-sm{
+ margin-top: 1rem;
+}
+
+.ml-xs {
+  margin-left: 0.40rem;
+}
+
+.pd-xs {
+  padding: 0px;
+}
+
 .conteudo {
   display: flex;
   flex-wrap: wrap;
@@ -84,4 +100,8 @@ textarea {
 
 .editor {
   width: 100%;
+}
+
+.text-gray-lighter {
+  color: var(--gray)
 }
