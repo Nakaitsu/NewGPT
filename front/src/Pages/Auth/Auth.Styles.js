@@ -13,6 +13,14 @@ width: 150px;
 height:100px;
 `;
 
+export const StyledForm = styled.form`
+  width: 100%;
+  padding-top:20px;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 export const StyledInput = styled.input`
   border-radius: 50px;
   background-color: #eaeaea;
@@ -21,6 +29,17 @@ export const StyledInput = styled.input`
   outline: none;
   width: 100%;
   margin-bottom: 10px;
+`;
+
+export const ComboBox = styled.select`
+  border-radius: 50px;
+  background-color: #eaeaea;
+  padding: 10px;
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 16px;
 `;
 
 export const StyledContainer = styled.div`
@@ -44,6 +63,7 @@ export const RightPanel = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   padding: 10px;
 `;
 
@@ -55,14 +75,6 @@ export const LoginContainer = styled.div`
  flex-direction: column;
  justify-content: center;
  align-items: center;
-`;
-
-export const StyledForm = styled.form`
-  width: 100%;
-  padding-top:20px;
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
 `;
 
 export const RoundButton = styled.button`
@@ -123,3 +135,4 @@ export const RegisterButton = styled.button`
   border-radius: 50px;
   cursor: pointer;
 `;
+

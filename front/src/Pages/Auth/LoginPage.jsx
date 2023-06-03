@@ -52,9 +52,13 @@ const LoginPage = () => {
             <label>
               <StyledInput type="password" placeholder="Senha" value={password} onChange={handlePasswordChange} />
             </label>
-            <span className="forgot-password mb-sm pd-xs ml-xs" onClick={handleForgotPasswordClick}>
-                Esqueceu sua senha?
-              </span>
+            <span
+              className="forgot-password mb-sm ml-xs"
+              style={{textDecoration: "underline", cursor: "pointer" }}
+              onClick={handleForgotPasswordClick}
+            >
+            Esqueceu sua senha?
+            </span>
 
            
             <LoginButton type="submit">Login</LoginButton>
