@@ -136,3 +136,8 @@ export const RegisterButton = styled.button`
   cursor: pointer;
 `;
 
+export const ErrorMessage = styled.p`
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+`;

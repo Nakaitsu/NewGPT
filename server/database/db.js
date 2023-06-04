@@ -1,22 +1,9 @@
-import { createConnection } from 'mysql';
+// const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
-const createDBConnection = () => {
-  const connection = createConnection({
-    host: 'localhost',
-    user: 'root',
-    database: 'aldeia_senai',
-  });
+export const sequelize = new Sequelize('aldeia_senai', 'root', '', {
+  host: 'localhost',
+  dialect: 'mysql',
+});
 
-  connection.connect((err) => {
-    if (err) {
-      console.error('Failed to connect to the database:', err);
-      return;
-    }
-
-    console.log('Connected to the database');
-  });
-
-  return connection;
-};
-
-export default createDBConnection;
+export default sequelize;

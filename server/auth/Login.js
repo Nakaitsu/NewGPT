@@ -1,18 +1,21 @@
-import axios from 'axios';
+import User from '../models/User';
 
-export const loginUser = async (username, password) => {
-    try {
-      const response = await axios.post('http://localhost:5000/api/login', {
-        username,
+export const loginUser = async (email, password) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        email,
         password,
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Failed to login:', error);
-      throw new Error('Failed to login');
+      },
+    });
+
+    if (!user) {
+      throw new Error('Invalid email or password');
     }
-  };
 
-export default loginUser;
-
-  
+    return user;
+  } catch (error) {
+    console.error('Failed to login:', error);
+    throw new Error('Failed to login');
+  }
+};

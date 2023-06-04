@@ -76,8 +76,8 @@ textarea {
   margin-left: 0.40rem;
 }
 
-.pd-xs {
-  padding: 0px;
+.ml-sm {
+  margin-left: 1.00rem;
 }
 
 .conteudo {
@@ -105,3 +105,4 @@ textarea {
 .text-gray-lighter {
   color: var(--gray)
 }
+

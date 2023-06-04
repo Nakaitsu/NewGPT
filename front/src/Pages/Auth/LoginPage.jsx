@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
   Logo,
@@ -20,6 +21,8 @@ import {
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -39,10 +42,8 @@ const LoginPage = () => {
       });
 
       const { user } = response.data;
-      // Handle successful login, e.g., redirect to dashboard, set user state, etc.
       console.log('Login successful:', user);
     } catch (error) {
-      // Handle login error, e.g., display error message
       console.error('Failed to login:', error);
     }
 
@@ -98,7 +99,7 @@ const LoginPage = () => {
         <label className='mb-sm'>
           Crie seu cadastro na plataforma e comece a praticar suas habilidades
         </label>
-        <RegisterButton>Cadastrar</RegisterButton>
+        <RegisterButton onClick={() => navigate('/signup')}>Cadastrar</RegisterButton>
       </RightPanel>
 
     </StyledContainer>

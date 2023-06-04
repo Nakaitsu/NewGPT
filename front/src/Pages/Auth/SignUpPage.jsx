@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {Logo, StyledInput, StyledContainer, LeftPanel, RightPanel, LoginContainer, StyledForm, LoginButton, RegisterButton } from '../Auth/Auth.Styles';
+import { useNavigate } from 'react-router-dom';
+import { Logo, StyledInput, StyledContainer, LeftPanel, RightPanel, LoginContainer, StyledForm, LoginButton, RegisterButton, ErrorMessage } from '../Auth/Auth.Styles';
 
 const SignUpPage = () => {
   const [username, setUsername] = useState('');
@@ -8,7 +9,14 @@ const SignUpPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
-  
+  const [errorMessage, setErrorMessage] = useState('');
+  const [registrationStatus, setRegistrationStatus] = useState({
+    success: false,
+    message: ''
+  });
+
+  const navigate = useNavigate();
+
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -33,41 +41,43 @@ const SignUpPage = () => {
     e.preventDefault();
 
     if (!name || !username || !email || !password || !checkPassword) {
-      console.error('Please fill in all fields');
+      setErrorMessage('Por favor preencha todos os campos.');
       return;
     }
-  
+
     if (password !== checkPassword) {
-      console.error('Passwords do not match');
+      setErrorMessage('Senhas não coincidem.');
       return;
     }
-  
+
     try {
-      const usernameExists = await axios.get(`/api/check-username/${username}`);
+      const usernameExists = await axios.get(`http://localhost:5000/api/register/check-username/${username}`);
       if (usernameExists.data.exists) {
-        console.error('Username already exists');
+        setErrorMessage('Nome de usuário já está sendo utilizado!');
         return;
       }
-  
-      const emailExists = await axios.get(`/api/check-email/${email}`);
+
+      const emailExists = await axios.get(`http://localhost:5000/api/register/check-email/${email}`);
       if (emailExists.data.exists) {
-        console.error('Email already exists');
+        setErrorMessage('Esse email já existe! Ele é seu? Log In');
         return;
       }
     } catch (error) {
       console.error('Failed to check username or email:', error);
+      setErrorMessage('Erro ao checar nome de usuário e email');
       return;
     }
 
     const user = {
-      name, 
-      username, 
-      email, 
-      password, 
+      name,
+      username,
+      email,
+      password,
     };
 
     try {
       const response = await axios.post('http://localhost:5000/api/register', user);
+      setErrorMessage('');
       setRegistrationStatus({ success: true, message: response.data.message });
     } catch (error) {
       console.error('Failed to add user:', error);
@@ -76,7 +86,6 @@ const SignUpPage = () => {
 
     console.log('Cadastro enviado:', name, username, email, password, checkPassword);
   };
-    
 
   return (
     <StyledContainer>
@@ -84,16 +93,14 @@ const SignUpPage = () => {
 
       <LeftPanel>
         <LoginContainer>
-
           <h2 className="mb-sm">Crie sua conta!</h2>
 
           <StyledForm onSubmit={handleRegistrationSubmit}>
-            
             <label>
               <StyledInput type="text" placeholder="Nome" value={name} onChange={handleNameChange} />
             </label>
             <label>
-              <StyledInput type="text" placeholder="Nome de usuario" value={username} onChange={handleUsernameChange} />
+              <StyledInput type="text" placeholder="Nome de usuário" value={username} onChange={handleUsernameChange} />
             </label>
             <label>
               <StyledInput type="text" placeholder="Email" value={email} onChange={handleEmailChange} />
@@ -104,11 +111,11 @@ const SignUpPage = () => {
             <label>
               <StyledInput type="password" placeholder="Repita sua senha" value={checkPassword} onChange={handleCheckPasswordChange} />
             </label>
+            {errorMessage && <ErrorMessage className='ml-xs'>{errorMessage}</ErrorMessage>}
             <br />
-            <LoginButton type="submit">Concluir</LoginButton>
-
+            <LoginButton type="submit">Cadastrar-se</LoginButton>
           </StyledForm>
-        </LoginContainer>  
+        </LoginContainer>
       </LeftPanel>
 
       <RightPanel>
@@ -116,16 +123,15 @@ const SignUpPage = () => {
           Boas Vindas!
         </h2>
         <label className='mb-sm'>
-        O Aldeia Senais está com tudo pronto para te para você poder desenvolver suas habildades junto a sua unidade acadêmica
+          O Aldeia Senais está com tudo pronto para te para você poder desenvolver suas habildades junto a sua unidade acadêmica
         </label>
         <h2 className='mb-sm text-gray' >
           Já tem uma conta?
         </h2>
-        <RegisterButton >
-            Login
+        <RegisterButton onClick={() => navigate('/login')}>
+          Login
         </RegisterButton>
       </RightPanel>
-
     </StyledContainer>
   );
 };
