@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import {Logo, StyledInput, StyledContainer, LeftPanel, RightPanel, LoginContainer, StyledForm, LoginButton, RegisterButton, ComboBox }from './Auth.Styles'
+import axios from 'axios';
+import {Logo, StyledInput, StyledContainer, LeftPanel, RightPanel, LoginContainer, StyledForm, LoginButton, RegisterButton } from '../Auth/Auth.Styles';
 
 const SignUpPage = () => {
   const [username, setUsername] = useState('');
@@ -7,8 +8,6 @@ const SignUpPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
-  const [job, setJob] = useState('')
-  const [jobOptions] = useState(['Professor', 'Estudante']);
   
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -29,15 +28,55 @@ const SignUpPage = () => {
   const handleCheckPasswordChange = (e) => {
     setCheckPassword(e.target.value);
   };
-  const handleJobChange = (e) => {
-    setJob(e.target.value);
-  };
 
-  const handleStyledFormSubmit = (e) => {
+  const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
-    
-    console.log('Cadastro enviado:', email, password);
+
+    if (!name || !username || !email || !password || !checkPassword) {
+      console.error('Please fill in all fields');
+      return;
+    }
+  
+    if (password !== checkPassword) {
+      console.error('Passwords do not match');
+      return;
+    }
+  
+    try {
+      const usernameExists = await axios.get(`/api/check-username/${username}`);
+      if (usernameExists.data.exists) {
+        console.error('Username already exists');
+        return;
+      }
+  
+      const emailExists = await axios.get(`/api/check-email/${email}`);
+      if (emailExists.data.exists) {
+        console.error('Email already exists');
+        return;
+      }
+    } catch (error) {
+      console.error('Failed to check username or email:', error);
+      return;
+    }
+
+    const user = {
+      name, 
+      username, 
+      email, 
+      password, 
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/register', user);
+      setRegistrationStatus({ success: true, message: response.data.message });
+    } catch (error) {
+      console.error('Failed to add user:', error);
+      setRegistrationStatus({ success: false, message: 'Failed to add user' });
+    }
+
+    console.log('Cadastro enviado:', name, username, email, password, checkPassword);
   };
+    
 
   return (
     <StyledContainer>
@@ -48,7 +87,7 @@ const SignUpPage = () => {
 
           <h2 className="mb-sm">Crie sua conta!</h2>
 
-          <StyledForm onSubmit={handleStyledFormSubmit}>
+          <StyledForm onSubmit={handleRegistrationSubmit}>
             
             <label>
               <StyledInput type="text" placeholder="Nome" value={name} onChange={handleNameChange} />
@@ -65,21 +104,13 @@ const SignUpPage = () => {
             <label>
               <StyledInput type="password" placeholder="Repita sua senha" value={checkPassword} onChange={handleCheckPasswordChange} />
             </label>
-            <label>
-              <ComboBox value={name} onChange={handleJobChange}>
-                <option value="job">Selecione seu cargo</option>
-                {jobOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </ComboBox>
-            </label>
             <br />
             <LoginButton type="submit">Concluir</LoginButton>
+
           </StyledForm>
         </LoginContainer>  
       </LeftPanel>
+
       <RightPanel>
         <h2 className='mb-sm'>
           Boas Vindas!

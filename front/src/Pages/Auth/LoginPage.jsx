@@ -1,23 +1,52 @@
 import React, { useState } from 'react';
-import {Logo, StyledInput, StyledContainer, LeftPanel, RightPanel, LoginContainer, StyledForm, RoundButton, GoogleIcone, Line, TextWithLine, Text, LoginButton, RegisterButton }from './Auth.Styles'
+import axios from 'axios';
+import {
+  Logo,
+  StyledInput,
+  StyledContainer,
+  LeftPanel,
+  RightPanel,
+  LoginContainer,
+  StyledForm,
+  RoundButton,
+  GoogleIcone,
+  Line,
+  TextWithLine,
+  Text,
+  LoginButton,
+  RegisterButton
+} from '../Auth/Auth.Styles';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleStyledFormSubmit = (e) => {
+  const handleStyledFormSubmit = async (e) => {
     e.preventDefault();
-    
-    console.log('Login submitted:', username, password);
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/login', {
+        email,
+        password,
+      });
+
+      const { user } = response.data;
+      // Handle successful login, e.g., redirect to dashboard, set user state, etc.
+      console.log('Login successful:', user);
+    } catch (error) {
+      // Handle login error, e.g., display error message
+      console.error('Failed to login:', error);
+    }
+
+    console.log('Login submitted:', email, password);
   };
 
   const handleForgotPasswordClick = () => {
@@ -30,7 +59,6 @@ const LoginPage = () => {
 
       <LeftPanel>
         <LoginContainer>
-
           <h2 className="mb-sm">Entrar na sua conta</h2>
           <h2 className="text-gray-lighter mb-sm">Entrar usando suas redes sociais</h2>
 
@@ -40,31 +68,29 @@ const LoginPage = () => {
 
           <TextWithLine className="mb-sm">
             <Line />
-              <Text>Ou</Text>
-            <Line/>
+            <Text>Ou</Text>
+            <Line />
           </TextWithLine>
 
           <StyledForm onSubmit={handleStyledFormSubmit}>
-            
             <label>
-              <StyledInput type="text" placeholder="Email" value={username} onChange={handleUsernameChange} />
+              <StyledInput type="text" placeholder="Email" value={email} onChange={handleEmailChange} />
             </label>
             <label>
               <StyledInput type="password" placeholder="Senha" value={password} onChange={handlePasswordChange} />
             </label>
             <span
               className="forgot-password mb-sm ml-xs"
-              style={{textDecoration: "underline", cursor: "pointer" }}
+              style={{ textDecoration: "underline", cursor: "pointer" }}
               onClick={handleForgotPasswordClick}
             >
-            Esqueceu sua senha?
+              Esqueceu sua senha?
             </span>
-
-           
             <LoginButton type="submit">Login</LoginButton>
           </StyledForm>
-        </LoginContainer>  
+        </LoginContainer>
       </LeftPanel>
+
       <RightPanel>
         <label className='mb-sm'>
           Primeira vez por aqui?
