@@ -8,10 +8,18 @@ const Navbar = () => {
         <Brand />
       </BrandWrapper>
       <NavLinkList>
-        <NavLink href="#">Home</NavLink>
-        <NavLink href="#">Atividades</NavLink>
-        <NavLink href="#">Sobre</NavLink>
-        <NavLink href="#">Suporte</NavLink>
+        <li>
+          <NavLink href="#">Home</NavLink>
+        </li>
+        <li>
+          <NavLink href="#">Atividades</NavLink>
+        </li>
+        <li>
+          <NavLink href="#">Sobre</NavLink>
+        </li>
+        <li>
+          <NavLink href="#">Suporte</NavLink>
+        </li>
       </NavLinkList>
     </NavbarStyled>
   )

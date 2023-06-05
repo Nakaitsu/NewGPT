@@ -3,6 +3,7 @@
   --cyan: #63e4fb;
   --blue-lighten: #89dcf0;
   --blue-darken: #142a3a;
+  /* --blue-darken: #1f435c; */
   --green: #629a34;
   --red: #f91a47;
   --dm-blue: #b6f1fc;
@@ -54,9 +55,30 @@ textarea {
   border: none;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 #root {
   display: flex;
   flex-direction: column;
+}
+
+.py-sm {
+  padding-top: 1.2em;
+  padding-bottom: 1.2em;
+}
+
+.py-md {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.px-sm {
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
 }
 
 .my-md {
