@@ -133,16 +133,31 @@ const QuestionPage = ({ question }) => {
 
           <InfoSectionTitle>Saída</InfoSectionTitle>
           <InfoInstructionBox>
-            <span>2 x 1 = 2</span>
-            <span>2 x 2 = 4</span>
-            <span>2 x 3 = 6</span>
-            <span>2 x 4 = 8</span>
-            <span>2 x 5 = 10</span>
-            <span>2 x 6 = 12</span>
-            <span>2 x 7 = 14</span>
-            <span>2 x 8 = 16</span>
-            <span>2 x 9 = 18</span>
-            <span>2 x 10 = 20</span>
+          <span>
+          INPUT
+          JOAO
+          500.00
+          1230.30
+
+          OUTPUT
+          TOTAL = R$ 684.54
+          </span>
+          <hr />
+          <span>
+          PEDRO
+          700.00
+          0.00
+
+          TOTAL = R$ 700.00
+          </span>
+          <hr />
+          <span>
+          MANGOJATA
+          1700.00
+          1230.50
+
+          TOTAL = R$ 1884.58
+          </span>
           </InfoInstructionBox>
         </InstructionContainer>
 
@@ -186,4 +201,4 @@ const QuestionPage = ({ question }) => {
   )
 }
 
-export default QuestionPage
+export default QuestionPage;

@@ -77,6 +77,7 @@ const SignUpPage = () => {
 
     try {
       const response = await axios.post('http://localhost:5000/api/register', user);
+      navigate('/exercise');
       setErrorMessage('');
       setRegistrationStatus({ success: true, message: response.data.message });
     } catch (error) {

@@ -44,6 +44,7 @@ app.post('/', async (req, res) => {
     res.status(200).send({
       bot: response,
     });
+    console.log(res.response);
   } catch (error) {
     console.log(error);
     res.status(500).send({ error });
@@ -89,21 +90,6 @@ app.get('/api/register/check-email/:email', async (req, res) => {
 app.post('/api/register', async (req, res) => {
   const { name, username, email, password } = req.body;
 
-  // try {
-  //   const existingUser = await User.findOne({
-  //     where: {
-  //       [Op.or]: [{ username: username }, { email: email }],
-  //     },
-  //   });
-
-  //   if (existingUser) {
-  //     const message = existingUser.username === username
-  //       ? 'Username already exists'
-  //       : 'Email already exists';
-
-  //     res.status(400).json({ error: message });
-  //     return;
-  //   }
   try{
     const user = {
       name,

@@ -43,6 +43,7 @@ const LoginPage = () => {
 
       const { user } = response.data;
       console.log('Login successful:', user);
+      navigate('/exercise');
     } catch (error) {
       console.error('Failed to login:', error);
     }
