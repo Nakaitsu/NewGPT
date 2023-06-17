@@ -1,12 +1,22 @@
 :root {
-  --primary: #04addc;
+  --primary: #0d8337;
+  /* --primary: #04addc; */
   --cyan: #63e4fb;
   --blue-lighten: #89dcf0;
   --blue-darken: #142a3a;
+  /* --blue-darken: #1f435c; */
   --green: #629a34;
   --red: #f91a47;
   --dm-blue: #b6f1fc;
-  --dm-dark: #142428;
+  --dm-dark: #0a1a24;
+  --dm-darken: #0d181b;
+  --dm-purple: #303282;
+  --dm-purple-darken: #090019;
+  --dm-purple-t: #303282aa;
+  --dm-yellow: #ea971e;
+
+  --dm-grey: #16262f;
+  --dm-grey-lighten: #2e424e;
   
   --orange: #f5a623;
   --purple: #8b5abb;
@@ -17,6 +27,9 @@
   --light-gray: #f5f5f5;
   --lighter-gray: #EFEFEF;
   --brown: #6d4c41;
+
+  --text-dark: #0f0f0f;
+  --text-light: #ffffff;
 }
 
 * {
@@ -54,9 +67,30 @@ textarea {
   border: none;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 #root {
   display: flex;
   flex-direction: column;
+}
+
+.py-sm {
+  padding-top: 1.2em;
+  padding-bottom: 1.2em;
+}
+
+.py-md {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.px-sm {
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
 }
 
 .my-md {
@@ -64,6 +98,7 @@ textarea {
   margin-bottom: 2em;
 }
 
+<<<<<<< HEAD
 .mb-sm{
  margin-bottom: 1rem;
 }
@@ -79,6 +114,9 @@ textarea {
 .ml-sm {
   margin-left: 1.00rem;
 }
+=======
+.mb-sm {  margin-bottom: 1.2em; }
+>>>>>>> exerciseList
 
 .conteudo {
   display: flex;
