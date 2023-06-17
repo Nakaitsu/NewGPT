@@ -1,17 +1,16 @@
 import styled from 'styled-components'
+import { variant } from 'styled-system'
 
 export const NavbarStyled = styled.nav`
   display: flex;
   flex-direction: column;
-  background-color: yellow;
-  background-color: var(--blue-darken);
-  border-right: 2px solid #1f435c;
+  background-color: var(--dm-darken);
+  border-right: 1px solid #1f435c;
 `
 
 export const BrandWrapper = styled.div`
   flex: 0;
   width: 100%;
-  background: #ff222255;
 `
 
 export const Brand = styled.img`
@@ -50,4 +49,11 @@ export const NavLink = styled.a`
     background-color: var(--primary);
     color: var(--dark-grey);
   }
+
+  ${variant({
+    prop: 'active',
+    variants: {
+      true: { backgroundColor: 'var(--primary)' }
+    }
+  })}
 `
