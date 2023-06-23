@@ -10,14 +10,17 @@ const ExerciseCard = ({ exercise, onClick }) => {
     <Card>
       <ExerciseTitle className="mb-sm">{exercise.title}</ExerciseTitle>
       <ExerciseDescription className="mb-sm" limited>{exercise.description}</ExerciseDescription>
+
       <CardControls>
         <ButtonWrapper>
           <Button href={"exercise/" + exercise.id} colorType="primary">Tentar</Button>
           <Button onClick={() => onClick(exercise)} colorType="secondary">Detalhes</Button>
         </ButtonWrapper>
+
         <StatusWrapper>
           <Status>{exercise.status}</Status>
         </StatusWrapper>
+        
       </CardControls>
     </Card>
   )

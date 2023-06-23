@@ -98,25 +98,7 @@ main {
   margin-bottom: 2em;
 }
 
-<<<<<<< HEAD
-.mb-sm{
- margin-bottom: 1rem;
-}
-
-.mt-sm{
- margin-top: 1rem;
-}
-
-.ml-xs {
-  margin-left: 0.40rem;
-}
-
-.ml-sm {
-  margin-left: 1.00rem;
-}
-=======
 .mb-sm {  margin-bottom: 1.2em; }
->>>>>>> exerciseList
 
 .conteudo {
   display: flex;
