@@ -56,4 +56,17 @@ export const NavLink = styled.a`
       true: { backgroundColor: 'var(--primary)' }
     }
   })}
+
+  ${variant({
+    prop: 'disabled',
+    variants: {
+      true: { 
+        color: 'var(--dm-grey)',
+        '&:hover': {
+          backgroundColor: 'transparent',
+          color: 'var(--dm-grey)'
+        }
+      }
+    }
+  })}
 `

@@ -27,19 +27,19 @@ const QuestionPage = ({ question }) => {
   let codeMirrorEditor = null
 
   useEffect(() => {
-    if (loadingResponse) {
-      setConsoleOpen(true);
-      setConsoleText('');
-      setDotCount(0);
+    // if (loadingResponse) {
+    //   setConsoleOpen(true);
+    //   setConsoleText('');
+    //   setDotCount(0);
 
-      setLoadInterval(setInterval(() => {
-        setConsoleText(consoleText => consoleText + '.');
-        setDotCount(count => count + 1);
-      }, 100));
-    } else {
-      clearInterval(loadInterval);
-      setLoadInterval(null);
-    }
+    //   setLoadInterval(setInterval(() => {
+    //     setConsoleText(consoleText => consoleText + '.');
+    //     setDotCount(count => count + 1);
+    //   }, 100));
+    // } else {
+    //   clearInterval(loadInterval);
+    //   setLoadInterval(null);
+    // }
 
     if (!codeMirrorEditor && !hasEditor) {
       const initializeEditor = () => {
@@ -60,12 +60,12 @@ const QuestionPage = ({ question }) => {
     }
   }, [loadingResponse])
 
-  useEffect(() => {
-    if (dotCount === 4) {
-      setConsoleText('');
-      setDotCount(0);
-    }
-  }, [dotCount]);
+  // useEffect(() => {
+  //   if (dotCount === 4) {
+  //     setConsoleText('');
+  //     setDotCount(0);
+  //   }
+  // }, [dotCount]);
 
   const handleLanguageSelect = async (event) => {
     const language = event.target.value

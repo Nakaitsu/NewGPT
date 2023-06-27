@@ -48,7 +48,7 @@ export const generateOutput = async (openai, code, language) => {
 };
 
 export const analyzeAnswer = async (openai, question, code, language) => {
-  const prompt = `You talk in Brazilian Portuguese. determine if the answer is correct or not without providing the answer and say why it's incorrect.
+  const prompt = `Determine se a resposta está correta ou não sem fornecer a resposta e diga por que está incorreta.
   question: ${question}
   language: ${language}
   code: ${code}

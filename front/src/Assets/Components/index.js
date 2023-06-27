@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { variant } from 'styled-system'
 
 export const Container = styled.div`
   width: 94.3%;
@@ -14,52 +13,49 @@ export const ContentBlock = styled.div`
   margin: 1em 0;
 `
 
-export const Button = styled.a`
+export const ButtonWrapper = styled.div`
+  display: flex;
+  column-gap: .5em;
+  align-items: center;
+`
+
+export const Layout = styled.div`
+  display: grid;
+  grid-template-columns: 15% 85%;
+  height: 100%;
+`
+
+export const TwoColumns = styled.div`
+  display: grid;
+  grid-template-columns: ${props => props.col1} ${props => props.col2};
+  width: 100%;
+  ${props => props.fh ? "height: 100%;" : ""}
+`
+
+export const Controls = styled.div`
+  display: flex;
+  column-gap: 1em;
+  align-items: center;
+  width: 100%;
+  padding: .5em .75em;
+`
+
+export const ControlsTitle = styled.span`
   display: inline-block;
-  padding: .4em 1em;
-  border-radius: 7px;
-  font-size: 1rem;
-  border: none;
-  text-decoration: none;
-  
-  &:hover {
-    cursor: pointer;
-  }
+  font-size: 1.2rem;
+`
 
-  ${variant({
-    prop: 'colorType',
-    variants: {
-      primary: { 
-        backgroundColor: 'var(--primary)', 
-        color: 'var(--text-light)' 
-      },
-      secondary: {
-        backgroundColor: '#aaaaaa',
-        color: 'var(--text-dark)'
-      }
-      ,
-      dark: { 
-        backgroundColor: 'var(--dm-purple-darken)', 
-        color: 'var(--text-light)'
-      },
-      purple: {
-        backgroundColor: 'var(--dm-purple)',
-        color: 'var(--text-light)'
-      }
-    } 
-  })}
+export const ControlsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: .7rem;
+  padding: 0 3.5rem;
+`
 
-  ${variant({
-    prop: 'size',
-    variants: {
-      sm: { 
-        padding: '.4em 1em', 
-        fontSize: '1rem' 
-      },
-      md: {
-        padding: '.6em 1.5em', 
-        fontSize: '1.1rem' 
-      }
-    }
-  })}
+export const Icon = styled.span`
+  display: inline-flex;
+  align-items: center;
+  margin-left: ${props => props.right ? '.6em' : 0};
+  margin-right: ${props => props.left ? '.6em' : 0};
 `

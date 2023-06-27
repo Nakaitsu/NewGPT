@@ -1,4 +1,5 @@
 :root {
+  /* BASE */
   --primary: #0d8337;
   /* --primary: #04addc; */
   --cyan: #63e4fb;
@@ -7,6 +8,8 @@
   /* --blue-darken: #1f435c; */
   --green: #629a34;
   --red: #f91a47;
+
+  /* DARKMODE */
   --dm-blue: #b6f1fc;
   --dm-dark: #0a1a24;
   --dm-darken: #0d181b;
@@ -14,10 +17,10 @@
   --dm-purple-darken: #090019;
   --dm-purple-t: #303282aa;
   --dm-yellow: #ea971e;
-
   --dm-grey: #16262f;
   --dm-grey-lighten: #2e424e;
   
+  /* ALTERNATIVE */
   --orange: #f5a623;
   --purple: #8b5abb;
   --pink: #ff70b8;
@@ -28,8 +31,15 @@
   --lighter-gray: #EFEFEF;
   --brown: #6d4c41;
 
+  /* TYPOGRAPHY */
   --text-dark: #0f0f0f;
   --text-light: #ffffff;
+  
+  /* ELEMENTS SHAPES */
+  --small-radius: 7px;
+  --default-radius: 16px;
+  --medium-radius: 24px;
+  --greater-radius: 50px;
 }
 
 * {
@@ -46,6 +56,7 @@ body {
   font-family: sans-serif;
   height: 100%;
   background-color: var(--dm-dark);
+  color: var(--text-light)
 }
 
 html,
@@ -78,6 +89,10 @@ main {
   flex-direction: column;
 }
 
+.p-sm { padding: 1.2em; }
+.p-md { padding: 1.75em; }
+.p-lg { padding: 2em; }
+
 .py-sm {
   padding-top: 1.2em;
   padding-bottom: 1.2em;
@@ -97,8 +112,20 @@ main {
   margin-top: 2em;
   margin-bottom: 2em;
 }
+.mx-sm { 
+  margin-left: 1.2em; 
+  margin-right: 1.2em;
+}
 
+.ml-sm {  margin-left: 1.2em; }
+.mr-sm {  margin-right: 1.2em; }
+.mt-sm {  margin-top: 1.2em; }
 .mb-sm {  margin-bottom: 1.2em; }
+
+.align-s-end { align-self: flex-end; }
+.align-s-start { align-self: flex-start; }
+
+.align-center { align-items: center; }
 
 .conteudo {
   display: flex;
@@ -125,4 +152,3 @@ main {
 .text-gray-lighter {
   color: var(--gray)
 }
-

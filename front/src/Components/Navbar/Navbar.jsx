@@ -21,16 +21,16 @@ const Navbar = () => {
       </BrandWrapper>
       <NavLinkList>
         <li>
-          <NavLink href="#" active={activeTab.toLowerCase() === ''}>Home</NavLink>
+          <NavLink disabled={true} href="#" active={false}>Home</NavLink>
         </li>
         <li>
-          <NavLink href="#" active={activeTab.toLowerCase() === 'exerciselist'}>Atividades</NavLink>
+          <NavLink href="/" active={activeTab.toLowerCase() === ''}>Atividades</NavLink>
         </li>
         <li>
-          <NavLink href="#" active={activeTab.toLowerCase() === 'about'}>Sobre</NavLink>
+          <NavLink disabled={true} href="#" active={activeTab.toLowerCase() === 'about'}>Sobre</NavLink>
         </li>
         <li>
-          <NavLink href="#" active={activeTab.toLowerCase() === 'support'}>Suporte</NavLink>
+          <NavLink disabled={true} href="#" active={activeTab.toLowerCase() === 'support'}>Suporte</NavLink>
         </li>
       </NavLinkList>
     </NavbarStyled>

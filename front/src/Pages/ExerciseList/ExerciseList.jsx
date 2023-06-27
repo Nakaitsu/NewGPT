@@ -1,113 +1,65 @@
 import React from 'react'
 import Navbar from '../../Components/Navbar/Navbar'
-import { Layout, TwoColumns, ControlsTitle, Controls, ControlsWrapper, SearchBar, List, ExerciseOverview, Card, ExerciseDescription, ExerciseTitle, Status, CardControls, StatusWrapper, ButtonWrapper, Dropdown, DropdownMenu, DropdownItem, EmptyOverview } from './ExerciseList.Styles'
+import { ExerciseOverview, EmptyOverview, OverviewTitle, OverviewSectionTitle, OverviewCodeFormated } from './ExerciseList.Styles'
 import UserPanel from '../../Components/UserPanel/UserPanel'
-import { Button } from '../../Assets/Components'
+import { ButtonWrapper, Layout, TwoColumns, ControlsTitle, Controls, ControlsWrapper } from '../../Assets/Components'
+import SearchBar from '../../Components/SearchBar/SearchBar'
 import { useState, useEffect, useRef } from 'react'
+import { Status, StatusWrapper, ExerciseTitle, ExerciseDescription, CardControls, Card, CardList } from '../../Assets/Components/ExerciseCard'
+import Dropdown from '../../Components/Dropdown/Dropdown'
+import Button from '../../Components/Buttons/Button'
+import ExercisesService from '../../Services/ExercisesService'
 
-const ExerciseCard = ({ exercise, onClick }) => {
+const ExerciseCard = ({ exercise, onClick, isActive }) => {
+
+  const handleDetalhesClick = (event) => {
+    event.preventDefault()
+    onClick(exercise)
+  }
+
   return (
-    <Card>
+    <Card active={isActive}>
       <ExerciseTitle className="mb-sm">{exercise.title}</ExerciseTitle>
       <ExerciseDescription className="mb-sm" limited>{exercise.description}</ExerciseDescription>
 
       <CardControls>
         <ButtonWrapper>
-          <Button href={"exercise/" + exercise.id} colorType="primary">Tentar</Button>
-          <Button onClick={() => onClick(exercise)} colorType="secondary">Detalhes</Button>
+          <Button href={"exercise/" + exercise.id} colorType="primary" title="Tentar" />
+          <Button onClick={handleDetalhesClick} colorType="secondary" title="Detalhes" />
         </ButtonWrapper>
 
-        <StatusWrapper>
-          <Status>{exercise.status}</Status>
-        </StatusWrapper>
-        
+        {exercise.status && (
+          <StatusWrapper>
+            <Status>{exercise.status}</Status>
+          </StatusWrapper>
+        )}
+
       </CardControls>
     </Card>
   )
 }
 
-const ProficiencyFilterButton = () => {
-  const [isEnabled, setIsEnabled] = useState(false)
-  const dropdownRef = useRef(null)
-
-  const handleClick = () => setIsEnabled(!isEnabled)
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target))
-        setIsEnabled(false)
-    }
-
-    if(isEnabled)
-      document.addEventListener('click', handleClickOutside)
-    else
-      document.removeEventListener('click', handleClickOutside)
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside)
-    }
-
-  }, [isEnabled])
-  
-  return (
-    <Dropdown ref={dropdownRef}>
-      <Button onClick={handleClick} colorType="primary">Proficiência</Button>
-      <DropdownMenu className={isEnabled && "enabled"}>
-        <DropdownItem href="#">Iniciante</DropdownItem>
-        <DropdownItem href="#">Intermediário</DropdownItem>
-        <DropdownItem href="#">Avançado</DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
-  )
-}
-
-const StatusFilterButton = () => {
-  const [isEnabled, setIsEnabled] = useState(false)
-  const dropdownRef = useRef(null)
-
-  const handleClick = () => setIsEnabled(!isEnabled)
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target))
-        setIsEnabled(false)
-    }
-
-    if(isEnabled)
-      document.addEventListener('click', handleClickOutside)
-    else
-      document.removeEventListener('click', handleClickOutside)
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside)
-    }
-
-  }, [isEnabled])
-
-  return (
-    <Dropdown ref={dropdownRef}>
-      <Button onClick={handleClick} colorType="primary">Status</Button>
-      <DropdownMenu className={isEnabled && "enabled" }>
-        <DropdownItem href="#">Não iniciado</DropdownItem>
-        <DropdownItem href="#">Iniciado</DropdownItem>
-        <DropdownItem href="#">Concluído</DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
-  )
-}
-
 const Overview = ({ exercise }) => {
-  if(exercise) {
+  if (exercise) {
     return (
       <ExerciseOverview>
-        <ExerciseTitle className="mb-sm">{exercise.title}</ExerciseTitle>
+        <OverviewTitle>{exercise.title}</OverviewTitle>
         <Status className="mb-sm">{exercise.status}</Status>
-        <Button href={"exercise/" + exercise.id} className="mb-sm" colorType="primary">Tentar</Button>
+
+        <Button href={"exercise/" + exercise.id} className="mb-sm" colorType="primary" title="Tentar" />
+
+        <OverviewSectionTitle>Descrição: </OverviewSectionTitle>
         <ExerciseDescription className="mb-sm">{exercise.description}</ExerciseDescription>
+
+        <OverviewSectionTitle>Entrada:</OverviewSectionTitle>
+        <OverviewCodeFormated className="mb-sm">{exercise.inputExample}</OverviewCodeFormated>
+
+        <OverviewSectionTitle>Saída:</OverviewSectionTitle>
+        <OverviewCodeFormated className="mb-sm">{exercise.outputExample}</OverviewCodeFormated>
       </ExerciseOverview>
     )
   }
-  else{
+  else {
     return (
       <ExerciseOverview>
         <EmptyOverview >Clique em detalhes para visualizar um exercicio.</EmptyOverview>
@@ -118,65 +70,62 @@ const Overview = ({ exercise }) => {
 
 const ExerciseList = () => {
   const [exercises, setExercises] = useState([])
-  const [exerciseFocused, setExerciseFocused] = useState(null)
-  const [searchTerm, setSearchTerm] = useState('')
-  const searchbarRef = useRef(null)
+  const [selectedExercise, setSelectedExercise] = useState(null)
 
-  useEffect(() => {
-    if(exercises) {
-      let content = exercises.filter(e => e.title.includes(searchTerm) || e.description.includes(searchTerm))
-      console.log(content)
-      setExercises(content)
-    }
-  }, [searchTerm])
+  const selectExercise = (exercise) => setSelectedExercise(exercise)
 
-  const handleSearchTermChange = (event) => setSearchTerm(event.target.value)
-  const focusExercise = (exercise) => setExerciseFocused(exercise)
-
-  const arrExercise = [
-    {id: 1,title: "01", description: "tut", status: "não iniciado"},
-    {id: 2,title: "02", description: "tutasd", status: "não iniciado"},
-    {id: 3,title: "03", description: "tute21r", status: "não iniciado"}
+  const proficiencies = [
+    {value: 1, text: 'Inicante'},
+    {value: 2, text: 'Intermediário'},
+    {value: 3, text: 'Avançado'}
+  ]
+  
+  const statuses = [
+    {value: 1, text: 'Não Iniciado'},
+    {value: 2, text: 'Em andamento'},
+    {value: 3, text: 'Concluído'}
   ]
 
+  // mount effect
   useEffect(() => {
-    setExercises(arrExercise)
+    populate()
   }, [])
-  
+
+  const populate = async () => {
+    const data = await ExercisesService.getAll()
+    setExercises(data)
+  }
+
   return (
-    <>
-      <Layout>
-        <Navbar />
-        <main>
-          <TwoColumns className='py-sm' col1="80%" col2="20%">
-            <ControlsWrapper>
-              <div>
-                <SearchBar type="search" ref={searchbarRef} value={searchTerm} onChange={handleSearchTermChange} placeholder="Encontrar atividade por título" />
-              </div>
-              <Controls>
-                <ControlsTitle>Filtros:</ControlsTitle>
-                <StatusFilterButton />
-                <ProficiencyFilterButton />
-              </Controls>
-            </ControlsWrapper>
+    <Layout>
+      <Navbar />
+      <main>
+        <TwoColumns className='py-sm' col1="80%" col2="20%">
+          <ControlsWrapper>
+            <SearchBar placeholder="Encontrar atividade por título" />
+            <Controls>
+              <ControlsTitle>Filtros:</ControlsTitle>
+              <Dropdown options={statuses} title="Status"/>
+              <Dropdown options={proficiencies} title="Proficiência"/>
+            </Controls>
+          </ControlsWrapper>
 
-            <UserPanel className="px-sm" />
-          </TwoColumns>
+          <UserPanel className="px-sm" />
+        </TwoColumns>
 
-          <TwoColumns col1="60%" col2="40%" fh>            
-            <List>
-              {exercises && exercises.length > 0 && (exercises.map((e, index) => {
-                return (
-                  <ExerciseCard key={index} exercise={e} onClick={focusExercise} />
-                )
-              }))}
-            </List>
+        <TwoColumns col1="60%" col2="40%" fh>
+          <CardList>
+            {exercises && exercises.length > 0 && (exercises.map((e, index) => {
+              return (
+                <ExerciseCard isActive={e === selectedExercise} key={e.id} exercise={e} onClick={selectExercise} />
+              )
+            }))}
+          </CardList>
 
-            <Overview exercise={exerciseFocused} />
-          </TwoColumns>
-        </main>
-      </Layout>
-    </>
+          <Overview exercise={selectedExercise} />
+        </TwoColumns>
+      </main>
+    </Layout>
   )
 }
 

@@ -4,6 +4,8 @@ import QuestionPage from './Components/QuestionPage/QuestionPage';
 import ExerciseList from './Pages/ExerciseList/ExerciseList';
 import LoginPage from './Pages/Auth/LoginPage';
 import SignUpPage from './Pages/Auth/SignUpPage';
+import ExerciseManagment from './Pages/ExerciseManagment/ExerciseManagment';
+import Exercise from './Pages/Exercise/Exercise';
 
 function App() {
   const question =`
@@ -28,8 +30,10 @@ MANGOJATA 1700.00 1230.50 TOTAL = R$ 1884.58
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignUpPage />} />
-      <Route path="/exercise"  element={<QuestionPage question={question}/>}  />
-      <Route path="/exerciseList" element={<ExerciseList />} />
+      {/* <Route path="/exercise/:id"  element={<QuestionPage question={question}/>}  /> */}
+      <Route path="/exercise/:id"  element={<Exercise />} />
+      <Route path="/" element={<ExerciseList />} />
+      <Route path="/managment" element={<ExerciseManagment />} />
     </Routes>
   );
 }

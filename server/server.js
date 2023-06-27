@@ -7,7 +7,7 @@ import { addUser } from './auth/SignUp.js';
 // import createDBConnection from './database/db.js';
 import User from './database/models/User.js';
 import { Op } from 'sequelize';
-
+import ExercisesRouter from './Routes/ExercisesRouter.js'
 
 dotenv.config();
 
@@ -17,9 +17,14 @@ console.log(process.env.OPENAI_API_KEY);
 
 const openai = initializeOpenAI(process.env.OPENAI_API_KEY);
 
+const corsOptions = {
+  origin: 'http://localhost:3000'
+}
+
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
+app.use('/Exercises', ExercisesRouter)
 
 app.get('/', async (req, res) => {
     res.status(200).send({
@@ -32,7 +37,9 @@ app.get('/', async (req, res) => {
 app.post('/', async (req, res) => {
   try {
     const { question, code, language, type } = req.body;
+
     console.log(question, code, language);
+    
     let response = null;
     if (type === 'hint') {
       response = await generateHint(openai, question, code, language);
@@ -130,8 +137,5 @@ app.post('/api/register', async (req, res) => {
       res.status(500).json({ error: 'Failed to login' });
     }
   }); 
-  
-
 
 app.listen(5000, () => console.log('Server is running on port http://localhost:5000'));
-
