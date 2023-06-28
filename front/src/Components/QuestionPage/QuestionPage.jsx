@@ -96,6 +96,7 @@ const QuestionPage = ({ question }) => {
       } else if (buttonId === 'submit' || buttonId === 'hint' || buttonId === "output") {
         setLoadingResponse(true)
         const sourceCode = editor.getValue()
+        
         // const sourceCode = textareaRef.current.value
         fetch('http://localhost:5000', {
           method: 'POST',
@@ -129,7 +130,8 @@ const QuestionPage = ({ question }) => {
           <h2>Instruções</h2>
 
           <InfoSectionTitle>Resumo</InfoSectionTitle>
-          {question}
+          <InfoText>{question}</InfoText>
+          
 
           <InfoSectionTitle>Saída</InfoSectionTitle>
           <InfoInstructionBox>

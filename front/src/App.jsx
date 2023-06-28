@@ -4,6 +4,18 @@ import QuestionPage from './Components/QuestionPage/QuestionPage';
 import ExerciseList from './Pages/ExerciseList/ExerciseList';
 import LoginPage from './Pages/Auth/LoginPage';
 import SignUpPage from './Pages/Auth/SignUpPage';
+// import useToken from './useToken';
+
+
+const getToken =() =>{
+  const tokenString = sessionStorage.getItem('token')
+  const userToken = JSON.parse(tokenString)
+  return userToken?.token
+} 
+
+function setToken(userToken) {
+  localStorage.setItem('token', JSON.stringify(userToken));
+}
 
 function App() {
   const question =`
@@ -23,6 +35,17 @@ function App() {
 PEDRO 700.00 0.00 TOTAL = R$ 700.00
 MANGOJATA 1700.00 1230.50 TOTAL = R$ 1884.58
   `;
+
+
+  const token = getToken();
+
+  // if(!token) {
+  //   return (
+  //   <>
+  //     <LoginPage setToken={setToken} />
+  //   </>
+  //   )
+  // }
 
   return (
     <Routes>

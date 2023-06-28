@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import {
   Logo,
@@ -17,8 +18,11 @@ import {
   LoginButton,
   RegisterButton
 } from '../Auth/Auth.Styles';
+import loginUser from './LoginUser';
+import SignUpPage from './SignUpPage';
+// import { response } from 'express';
 
-const LoginPage = () => {
+const LoginPage = ({ setToken }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
@@ -32,21 +36,39 @@ const LoginPage = () => {
     setPassword(e.target.value);
   };
 
-  const handleStyledFormSubmit = async (e) => {
+
+    // const handleSubmit = async e => {
+    //   e.preventDefault();
+    //   const token = loginUser({
+    //     email,
+    //     password
+    //   });
+    //   setToken(token);
+
+    // }
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      const token = await loginUser({
+        email,
+        password
+      });
+      setToken(token);
+      
       const response = await axios.post('http://localhost:5000/api/login', {
         email,
         password,
       });
-
+      setToken(response.data);
+      setID(user.id);
       const { user } = response.data;
       console.log('Login successful:', user);
-      navigate('/exercise');
+      
     } catch (error) {
       console.error('Failed to login:', error);
     }
+    
 
     console.log('Login submitted:', email, password);
   };
@@ -54,6 +76,10 @@ const LoginPage = () => {
   const handleForgotPasswordClick = () => {
     console.log('Forgot your password clicked');
   };
+
+  const loadSignup = () => {
+    return <SignUpPage />
+  }
 
   return (
     <StyledContainer>
@@ -68,13 +94,12 @@ const LoginPage = () => {
             <GoogleIcone />
           </RoundButton>
 
+          <StyledForm onSubmit={handleSubmit}>
           <TextWithLine className="mb-sm">
             <Line />
             <Text>Ou</Text>
             <Line />
           </TextWithLine>
-
-          <StyledForm onSubmit={handleStyledFormSubmit}>
             <label>
               <StyledInput type="text" placeholder="Email" value={email} onChange={handleEmailChange} />
             </label>
@@ -94,17 +119,21 @@ const LoginPage = () => {
       </LeftPanel>
 
       <RightPanel>
-        <label className='mb-sm'>
+        <h2 className='mb-sm'>
           Primeira vez por aqui?
-        </label>
+        </h2>
         <label className='mb-sm'>
           Crie seu cadastro na plataforma e comece a praticar suas habilidades
         </label>
-        <RegisterButton onClick={() => navigate('/signup')}>Cadastrar</RegisterButton>
+        <RegisterButton onClick={loadSignup}>Cadastrar</RegisterButton>
       </RightPanel>
 
     </StyledContainer>
   );
 };
+
+LoginPage.propTypes = {
+  setToken: PropTypes.func.isRequired
+}
 
 export default LoginPage;

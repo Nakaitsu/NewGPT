@@ -5,7 +5,8 @@ export const QuestionContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  background-color: rgba(137, 220, 240, 0.15);
+  /* background-color: rgba(137, 220, 240, 0.15); */
+  background-color: #629A34;
   overflowY: auto;
 `
 
@@ -88,6 +89,7 @@ export const InfoSectionTitle = styled.span`
 
 export const InfoText = styled.p`
   font-size: 1rem;
+  line-height: 1.3em;
   margin-top: .5em;
   margin-bottom: .5em;
 `

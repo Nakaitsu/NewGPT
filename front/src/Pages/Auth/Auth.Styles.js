@@ -14,11 +14,12 @@ height:100px;
 `;
 
 export const StyledForm = styled.form`
-  width: 100%;
+  width: 80%;
   padding-top:20px;
   display:flex;
   flex-direction: column;
   justify-content: center;
+  /* align-items: center; */
 `;
 
 export const StyledInput = styled.input`
