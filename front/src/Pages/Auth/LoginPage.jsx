@@ -41,9 +41,8 @@ const LoginPage = () => {
         password,
       });
 
-      const { user } = response.data;
-      console.log('Login successful:', user);
-      navigate('/exercise');
+      localStorage.setItem('userToken', response.data.token)
+      navigate('/');
     } catch (error) {
       console.error('Failed to login:', error);
     }

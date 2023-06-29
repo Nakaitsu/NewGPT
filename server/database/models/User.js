@@ -22,17 +22,19 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING(100),
     allowNull: false,
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-  },
-  updatedAt: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-  },
+  }
+  // createdAt: {
+  //   type: DataTypes.DATE,
+  //   allowNull: false,
+  //   defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+  // },
+  // updatedAt: {
+  //   type: DataTypes.DATE,
+  //   allowNull: false,
+  //   defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+  // },
+}, {
+  timestamps: false
 });
 
 export default User;

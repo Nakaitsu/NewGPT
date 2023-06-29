@@ -9,11 +9,11 @@ import { Status, StatusWrapper, ExerciseTitle, ExerciseDescription, CardControls
 import Dropdown from '../../Components/Dropdown/Dropdown'
 import Button from '../../Components/Buttons/Button'
 import ExercisesService from '../../Services/ExercisesService'
+import { useNavigate } from 'react-router-dom'
 
 const ExerciseCard = ({ exercise, onClick, isActive }) => {
 
   const handleDetalhesClick = (event) => {
-    event.preventDefault()
     onClick(exercise)
   }
 
@@ -44,7 +44,7 @@ const Overview = ({ exercise }) => {
     return (
       <ExerciseOverview>
         <OverviewTitle>{exercise.title}</OverviewTitle>
-        <Status className="mb-sm">{exercise.status}</Status>
+        {/* <Status className="mb-sm">{exercise.status}</Status> */}
 
         <Button href={"exercise/" + exercise.id} className="mb-sm" colorType="primary" title="Tentar" />
 
@@ -71,6 +71,7 @@ const Overview = ({ exercise }) => {
 const ExerciseList = () => {
   const [exercises, setExercises] = useState([])
   const [selectedExercise, setSelectedExercise] = useState(null)
+  const navigator = useNavigate()
 
   const selectExercise = (exercise) => setSelectedExercise(exercise)
 
@@ -88,7 +89,14 @@ const ExerciseList = () => {
 
   // mount effect
   useEffect(() => {
-    populate()
+    const loggedUser = localStorage.getItem('userToken')
+
+    if(loggedUser)
+      populate()
+    else {
+      alert('Usuário não autenticado')
+      navigator('/login')
+    }
   }, [])
 
   const populate = async () => {

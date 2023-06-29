@@ -42,6 +42,6 @@ const Exercise = sequelize.define('Exercise', {
   logging: false
 })
 
-Exercise.belongsTo(User, {foreignKey: 'instructor_id'})
+Exercise.belongsTo(User, { foreignKey: 'instructor_id' })
 
 export default Exercise

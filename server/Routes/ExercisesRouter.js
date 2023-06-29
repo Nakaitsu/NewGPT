@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getAll, add, update, remove, getById } from '../Controller/ExcercisesController.js'
+import { getAll, add, update, remove, getById } from '../Controllers/ExcercisesController.js'
 
 const router = Router()
 

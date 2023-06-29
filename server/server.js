@@ -8,6 +8,9 @@ import { addUser } from './auth/SignUp.js';
 import User from './database/models/User.js';
 import { Op } from 'sequelize';
 import ExercisesRouter from './Routes/ExercisesRouter.js'
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
+import UserAuthToken from './database/models/UserAuthToken.js'
 
 dotenv.config();
 
@@ -115,27 +118,68 @@ app.post('/api/register', async (req, res) => {
 });
 
 
-  app.post('/api/login', async (req, res) => {
-    const { email, password } = req.body;
-  
-    try {
+app.post('/api/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
       const user = await User.findOne({
+        attributes: ['id', 'username', 'email', 'password', 'role'],
         where: {
           email,
-          password,
+          password
         },
       });
-  
-      if (!user) {
-        res.status(401).json({ error: 'Invalid email or password' });
-        return;
-      }
-  
-      res.json({ user });
-    } catch (error) {
-      console.error('Failed to execute login query:', error);
-      res.status(500).json({ error: 'Failed to login' });
+
+    if (!user) {
+      res.status(401).json({ error: 'Invalid email or password' });
+      return;
     }
-  }); 
+    
+    const token = jwt.sign({ 
+      id: user.id,
+      username: user.username,
+    }, process.env.API_SECRET)
+    
+    await UserAuthToken.build({
+      user_id: user.id,
+      token,
+      expiration_date: null
+    }).save()
+    
+    res.status(200).json({ token });
+  } catch (error) {
+    console.error('Failed to execute login query:', error);
+    res.status(500).json({ error: 'Failed to login' });
+  }
+}); 
+
+app.get('/users', async (req, res) => {
+  const authHeader = req.headers["authorization"]
+
+  console.log(authHeader)
+
+  if(!authHeader)
+    res.sendStatus(401)
+
+  jwt.verify(
+    authHeader, 
+    process.env.API_SECRET, 
+    async (err, decoded) => {
+      if (!err) {
+        const user = await User.findOne({
+          attributes: ['id', 'username', 'email', 'role'],
+          where: {
+            id: decoded.id
+          }
+        })
+
+        req.user = user
+        res.status(200).json(user)
+      } 
+      else
+        return res.sendStatus(403)
+
+    })
+})
 
 app.listen(5000, () => console.log('Server is running on port http://localhost:5000'));

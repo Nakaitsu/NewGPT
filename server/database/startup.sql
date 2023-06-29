@@ -1,12 +1,20 @@
 CREATE DATABASE IF NOT EXISTS aldeia_senai;
 USE aldeia_Senai;
 
-CREATE TABLE IF NOT EXISTS `aldeia_senai`.`users` (
+CREATE TABLE IF NOT EXISTS users (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   username VARCHAR(100) NOT NULL,
   email VARCHAR(50) NOT NULL,
-  password VARCHAR(100) NOT NULL
+  password VARCHAR(100) NOT NULL,
+  role INT NOT NULL DEFAULT = 1
+);
+
+CREATE TABLE IF NOT EXISTS users_auth_token (
+  user_id INT NOT NULL,
+  token VARCHAR(500) NOT NULL,
+  expiration_date DATETIME NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE IF NOT EXISTS exercises (
