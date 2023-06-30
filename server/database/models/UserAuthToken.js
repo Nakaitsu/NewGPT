@@ -21,6 +21,6 @@ const UserToken = sequelize.define('Users_Auth_Token', {
   freezeTableName: true
 })
 
-UserToken.belongsTo(User, { foreignKey: 'user_id' })
+UserToken.belongsTo(User, { foreignKey: 'user_id' });
 
-export default UserToken
+export default UserToken;

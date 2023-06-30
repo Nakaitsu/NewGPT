@@ -14,7 +14,7 @@ export const BrandWrapper = styled.div`
 `
 
 export const Brand = styled.img`
-  width: 168px;
+  width: 120px;
   height: 75px;
 `
 

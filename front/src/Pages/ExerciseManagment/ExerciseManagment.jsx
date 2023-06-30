@@ -9,7 +9,6 @@ import { ModalBackdrop, ControlInput, ControlLabel, ModalFormContent, Modal, Con
 import Button from '../../Components/Buttons/Button'
 import Dropdown from '../../Components/Dropdown/Dropdown'
 import ExercisesService from '../../Services/ExercisesService'
-import UserToken from '../../../../server/database/models/UserAuthToken'
 import UserService from '../../Services/UserService'
 import { useNavigate } from 'react-router-dom'
 
@@ -31,7 +30,7 @@ const RegistrationModal = ({ closeModal, exercise }) => {
     proficiency: ''
   })
   const modalRef = useRef(null)
-  const navigator = useNavigate()
+  // const navigator = useNavigate()
 
   const handleSubmit = async (event) => {
     let response = null
@@ -73,20 +72,23 @@ const RegistrationModal = ({ closeModal, exercise }) => {
 
   // mount effect
   useEffect(() => {
-    const validateUser = async () => {
-      const token = localStorage.getItem('userToken')
+    // const validateUser = async () => {
+    //   const token = localStorage.getItem('userToken')
 
-      if(UserToken) {
-        const user = await UserService.getUser()
+    //   if(token) {
+    //     const user = await UserService.getUser()
+    //     console.log(user.role)
 
-        if(!user || user.role !== 2)
-          navigator('/login')
-      }
-      else
-        navigator('/login')
-    }
+    //     if(user.role != 2) {
+    //       console.log('user role', user.role)
+    //       navigator('/login')
+    //     }
+    //   }
+    //   else
+    //     navigator('/login')
+    // }
 
-    validateUser()
+    // validateUser()
     
     if(exercise.id)
       setFormData({ ...formData,
@@ -163,9 +165,29 @@ const ExerciseManagment = () => {
   const [exercises, setExercises] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedExercise, setSelectedExercise] = useState(null)
+  const navigator = useNavigate()
 
   // mount effect
   useEffect(() => {
+    const validateUser = async () => {
+      const token = localStorage.getItem('userToken')
+
+      if(token) {
+        const user = await UserService.getUser()
+        console.log(user.role)
+
+        if(user.role != 2) {
+          alert('Usuário sem acesso!')
+          // console.log('user role', user.role)
+          navigator('/login')
+        }
+      }
+      else
+        navigator('/login')
+    }
+
+    validateUser()
+    
     populate()
   }, [])
   

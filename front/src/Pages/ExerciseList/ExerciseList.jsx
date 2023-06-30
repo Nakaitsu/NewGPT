@@ -71,11 +71,34 @@ const Overview = ({ exercise }) => {
 const ExerciseList = () => {
   const [exercises, setExercises] = useState([])
   const [selectedExercise, setSelectedExercise] = useState(null)
-  const navigator = useNavigate()
+  const [searchTerm, setSearchTerm] = useState('')
+  const navigator = useNavigate() 
 
   const selectExercise = (exercise) => setSelectedExercise(exercise)
 
+  const handleSearchTermChange = (value) => {
+    if(value) {
+      let searchResult = exercises.filter(e => e.title.toLowerCase().includes(value))
+      setExercises(searchResult)
+    }
+    else 
+      populate()
+  }
+
+  const handleProficiencySelected = (option) => {
+    console.log('opcao', option)
+    console.log('lista', exercises)
+
+    if(option && option.value > 0 && exercises.length > 0) {
+      let filteredResult = exercises.filter(e => e.proficiency == option.value)
+      setExercises(filteredResult)
+    }
+    else 
+      populate()
+  }
+
   const proficiencies = [
+    {value: 0, text: 'Sem filtro'},
     {value: 1, text: 'Inicante'},
     {value: 2, text: 'Intermediário'},
     {value: 3, text: 'Avançado'}
@@ -110,11 +133,11 @@ const ExerciseList = () => {
       <main>
         <TwoColumns className='py-sm' col1="80%" col2="20%">
           <ControlsWrapper>
-            <SearchBar placeholder="Encontrar atividade por título" />
+            <SearchBar onChange={handleSearchTermChange} placeholder="Encontrar atividade por título" />
             <Controls>
               <ControlsTitle>Filtros:</ControlsTitle>
-              <Dropdown options={statuses} title="Status"/>
-              <Dropdown options={proficiencies} title="Proficiência"/>
+              {/* <Dropdown options={statuses} title="Status"/> */}
+              <Dropdown onSelect={handleProficiencySelected} options={proficiencies} title="Proficiência"/>
             </Controls>
           </ControlsWrapper>
 

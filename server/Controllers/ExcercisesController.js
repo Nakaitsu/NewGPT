@@ -5,11 +5,7 @@ export const getAll = async (req, res) => {
   
   try {
     // if(req.user.role === 'instructor') {
-      result = await Exercise.findAll({
-        where: {
-          instructor_id: 1
-        }
-      })
+      result = await Exercise.findAll({})
     // }
     // else if (req.user.role === 'student') {
     //   result = await Exercise.findAll()

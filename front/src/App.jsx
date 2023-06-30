@@ -6,34 +6,57 @@ import LoginPage from './Pages/Auth/LoginPage';
 import SignUpPage from './Pages/Auth/SignUpPage';
 import ExerciseManagment from './Pages/ExerciseManagment/ExerciseManagment';
 import Exercise from './Pages/Exercise/Exercise';
+import { useEffect, useState } from 'react';
+import UserService from './Services/UserService';
 
 function App() {
-  const question =`
-  Crie um programa que leia o nome de um vendedor, o salário fixo dele e o valor total das vendas feitas por ele no mês (em dinheiro). Considerando que esse vendedor recebe 15% sobre todas as vendas, escreva o salário final (total) desse vendedor no final do mês, com duas casas decimais.
-  
-  Não esqueça de imprimir uma quebra de linha após o resultado, caso contrário você receberá um "Erro de Apresentação".
-  
-  Não esqueça dos espaços em branco.
-  
-  Entrada
-  O arquivo de entrada contém um texto (primeiro nome do funcionário) e dois valores de dupla precisão, que são o salário do vendedor e o valor total vendido por ele.
-  
-  Saída
-  Imprima o salário total do vendedor, de acordo com o exemplo dado.
-  
-  INPUT JOAO 500.00 1230.30 OUTPUT TOTAL = R$ 684.54
-PEDRO 700.00 0.00 TOTAL = R$ 700.00
-MANGOJATA 1700.00 1230.50 TOTAL = R$ 1884.58
-  `;
+  const [user, setUser] = useState(null)
 
+  // mount effect
+  useEffect(() => {
+    const loadUser = async () => {
+      const token = localStorage.getItem('userToken')
+
+      if(token) {
+        const loggedUser = UserService.getUser()
+
+        setUser(loggedUser ? loggedUser : null)
+      }
+
+    }
+
+    loadUser()
+  }, [])
+
+  useEffect(() => {
+
+  }, [user])
+  
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignUpPage />} />
+      <>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+
+        {/* {user && user.role == 2 && ( */}
+          <Route path="/managment" element={<ExerciseManagment />} />
+        {/* )} */}
+
+        {/* {user && user.role == 2 && ( */}
+          <>
+            <Route path="/exercise/:id"  element={<Exercise />} />
+            <Route path="/" element={<ExerciseList />} />
+          </>
+        {/* )} */}
+        
+      </>
+
+      {/* <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignUpPage />} /> */}
       {/* <Route path="/exercise/:id"  element={<QuestionPage question={question}/>}  /> */}
-      <Route path="/exercise/:id"  element={<Exercise />} />
+      {/* <Route path="/exercise/:id"  element={<Exercise />} />
       <Route path="/" element={<ExerciseList />} />
-      <Route path="/managment" element={<ExerciseManagment />} />
+      <Route path="/managment" element={<ExerciseManagment />} /> */} */}
     </Routes>
   );
 }

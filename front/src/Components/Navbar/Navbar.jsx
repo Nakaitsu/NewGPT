@@ -12,6 +12,7 @@ const Navbar = () => {
     let pathname = location.pathname.split('/')
     pathname.shift()
     setActiveTab(pathname[0])
+    console.log(pathname)
   }, [activeTab])
   
   return (
