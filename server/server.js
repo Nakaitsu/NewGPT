@@ -11,6 +11,7 @@ import ExercisesRouter from './Routes/ExercisesRouter.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import UserAuthToken from './database/models/UserAuthToken.js'
+import sequelize from './database/db.js';
 
 dotenv.config();
 
@@ -181,5 +182,15 @@ app.get('/users', async (req, res) => {
 
     })
 })
+
+sequelize.authenticate()
+  .then(() => {
+    console.log('Database connection has been established successfully.');
+  })
+  .catch((error) => {
+    console.error('Unable to connect to the database:', error);
+  });
+
+sequelize.sync()
 
 app.listen(5000, () => console.log('Server is running on port http://localhost:5000'));
